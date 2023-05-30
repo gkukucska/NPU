@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Utils\FileIOHelpers\FileIOHelpers.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Protobuf Include="../../../Protos/AuthenticationProtocols/AuthenticationProtocols.proto" GrpcServices="Server" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,23 @@
+syntax = "proto3";
+option csharp_namespace = "NPU.Protocols";
+package AuthenticationProtocols;
+
+
+service RegistrationService{
+	rpc ValidateRegistrationData (RegistrationData) returns (RegistrationValidationResult);
+	rpc Register (RegistrationData) returns (RegistrationResult);
+}
+
+message RegistrationData{
+	string UserName=1;
+	string Password=2;
+}
+
+message RegistrationValidationResult{
+	bool IsValid=1;
+	string InValidReason=2;
+}
+
+message RegistrationResult{
+	bool IsSucceeded=1;
+}

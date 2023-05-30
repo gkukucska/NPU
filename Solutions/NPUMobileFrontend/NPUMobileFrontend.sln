@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31611.283
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NPUMobileFrontend", "NPUMobileFrontend\NPUMobileFrontend.csproj", "{1F7C1FDA-B5A6-487B-80B4-6B25F4E0D393}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoginPage", "..\..\Modules\GUI\Pages\LoginPage\LoginPage.csproj", "{3974802C-E9B8-40CB-B39D-3F7ADF4F836E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientInterfaces", "..\..\Modules\Interfaces\ClientInterfaces\ClientInterfaces.csproj", "{DD26AA84-D865-4CB8-A37E-AB176EC28C91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticatorClient", "..\..\Modules\Clients\AuthenticatorClient\AuthenticatorClient.csproj", "{297BCCBE-6EF4-4C76-B360-C4E00B434DE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncriptionServices", "..\..\Modules\Utils\EncriptionServices\EncriptionServices.csproj", "{F27CFE6A-06D7-4FFE-9869-8860CB07C88A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1F7C1FDA-B5A6-487B-80B4-6B25F4E0D393}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F7C1FDA-B5A6-487B-80B4-6B25F4E0D393}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F7C1FDA-B5A6-487B-80B4-6B25F4E0D393}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1F7C1FDA-B5A6-487B-80B4-6B25F4E0D393}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F7C1FDA-B5A6-487B-80B4-6B25F4E0D393}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F7C1FDA-B5A6-487B-80B4-6B25F4E0D393}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{3974802C-E9B8-40CB-B39D-3F7ADF4F836E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3974802C-E9B8-40CB-B39D-3F7ADF4F836E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3974802C-E9B8-40CB-B39D-3F7ADF4F836E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3974802C-E9B8-40CB-B39D-3F7ADF4F836E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD26AA84-D865-4CB8-A37E-AB176EC28C91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD26AA84-D865-4CB8-A37E-AB176EC28C91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD26AA84-D865-4CB8-A37E-AB176EC28C91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD26AA84-D865-4CB8-A37E-AB176EC28C91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{297BCCBE-6EF4-4C76-B360-C4E00B434DE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{297BCCBE-6EF4-4C76-B360-C4E00B434DE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{297BCCBE-6EF4-4C76-B360-C4E00B434DE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{297BCCBE-6EF4-4C76-B360-C4E00B434DE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F27CFE6A-06D7-4FFE-9869-8860CB07C88A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F27CFE6A-06D7-4FFE-9869-8860CB07C88A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F27CFE6A-06D7-4FFE-9869-8860CB07C88A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F27CFE6A-06D7-4FFE-9869-8860CB07C88A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
+	EndGlobalSection
+EndGlobal

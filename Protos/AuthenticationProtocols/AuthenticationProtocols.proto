@@ -1,0 +1,26 @@
+syntax = "proto3";
+option csharp_namespace = "NPU.Protocols";
+package AuthenticationProtocols;
+import "google/protobuf/empty.proto";
+
+
+service AuthenticationService{
+	rpc OpenSession(LoginCredentialData) returns (SessionData);
+	rpc ValidateSession(SessionData) returns (SessionValidationData);
+	rpc CloseSession(SessionData) returns (google.protobuf.Empty);
+}
+
+message LoginCredentialData{
+	string UserName=1;
+	string Password=2;
+}
+
+message SessionData{
+	string UserName=1;
+	string SessionToken=2;
+}
+
+message SessionValidationData{
+	bool IsValid=1;
+	string InValidReason=2;
+}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:NPU.GUI.LoginPage"
+             xmlns:converters="clr-namespace:NPU.GUI.LoginPage.Converters"
+             x:DataType="local:LoginPageViewModel"
+             x:Class="NPU.GUI.LoginPage.LoginPage">
+    <ContentView.Resources>
+        <converters:PasswordEncriptionConverter x:Key="PasswordEncriptionConverter"/>
+    </ContentView.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="1"
+               Text="User name:"/>
+        <Entry Grid.Row="2"
+               IsPassword="False"
+               Text="{Binding Username}"/>
+        <Label Grid.Row="3"
+               Text="Password:"/>
+        <Entry Grid.Row="4"
+               IsPassword="True"
+               Text="{Binding Password, Converter={StaticResource PasswordEncriptionConverter}, Mode=OneWayToSource}"/>
+        <Button Grid.Row="5"
+                Text="Log in"/>
+        <Button Grid.Row="5"
+                Text="Log in"
+                Command="{Binding LoginCommand}"/>
+        <Button Grid.Row="6"
+                Text="Register"
+                Command="{Binding RegisterCommand}"/>
+    </Grid>
+</ContentView>
