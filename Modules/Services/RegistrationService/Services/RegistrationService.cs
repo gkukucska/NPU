@@ -20,7 +20,7 @@ namespace NPU.Services.RegistrationService
 
         public override Task<RegistrationResult> Register(RegistrationData request, ServerCallContext context)
         {
-            return CredentialManager.RegisterUserAsync(request.UserName, request.Password).ContinueWith((t) =>
+            return CredentialManager.RegisterUserAsync(request.UserName, request.Password, context.CancellationToken).ContinueWith((t) =>
             {
                 return new RegistrationResult() { IsSucceeded = t.Result };
             });

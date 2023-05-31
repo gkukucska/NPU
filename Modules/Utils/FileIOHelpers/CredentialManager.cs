@@ -15,7 +15,7 @@ namespace NPU.Utils.FileIOHelpers
 
         static CredentialManager()
         {
-            _credentialList = FileIOHelpers.Load(_credentialLocation).Result.Select(x => new KeyValuePair<string, string>(x.Split(";")[0], x.Split(";")[1]));
+            _credentialList = FileIOHelpers.Load(_credentialLocation,CancellationToken.None).Result.Select(x => new KeyValuePair<string, string>(x.Split(";")[0], x.Split(";")[1]));
         }
 
         public static bool IsUserTaken(string username)
@@ -23,7 +23,7 @@ namespace NPU.Utils.FileIOHelpers
             return _credentialList.Any(x=>x.Key.Equals(username));
         }
 
-        public async static Task<bool> RegisterUserAsync(string username, string password)
+        public async static Task<bool> RegisterUserAsync(string username, string password,CancellationToken token)
         {
             lock (_registrationlock)
             {
@@ -33,7 +33,7 @@ namespace NPU.Utils.FileIOHelpers
                 }
                 _credentialList=_credentialList.Append(new KeyValuePair<string, string>(username, password.EncryptToStoredString()));
             }
-            await FileIOHelpers.Append(username + ";" + password.EncryptToStoredString(), _credentialLocation);
+            await FileIOHelpers.Append(username + ";" + password.EncryptToStoredString(), _credentialLocation,token);
             return true;
         }
 

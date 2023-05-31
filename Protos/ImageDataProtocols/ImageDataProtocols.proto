@@ -1,0 +1,32 @@
+syntax = "proto3";
+option csharp_namespace = "NPU.Protocols";
+package ImageDataProtocols;
+
+
+service ImageDataService{
+	rpc GetFirstImageData (ImageSessionData) returns (ImageData);
+	rpc GetImageData (ImageIdentiferData) returns (ImageData);
+	rpc GetNextImageData (ImageIdentiferData) returns (ImageData);
+	rpc SaveImageData (ImageUploadData) returns (ImageIdentiferData);
+}
+
+message ImageIdentiferData{
+	string ImageID=1;
+	ImageSessionData SessionData=2;
+}
+
+message ImageUploadData{
+	ImageSessionData SessionData=1;
+	bytes SerializedImage=2;
+	string Description=3;
+}
+
+message ImageData{
+	bytes SerializedImage=1;
+	string Description=2;
+}
+
+message ImageSessionData{
+	string UserName=1;
+	string SessionToken=2;
+}

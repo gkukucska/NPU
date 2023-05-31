@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32804.467
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageDataService", "..\..\Modules\Services\ImageDataService\ImageDataService\ImageDataService.csproj", "{6F87C851-F22E-4885-98F4-AC639A0BB47D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileIOHelpers", "..\..\Modules\Utils\FileIOHelpers\FileIOHelpers.csproj", "{BB90127B-E8B2-4137-8B00-4E224EA62F58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageDataRepository", "..\..\Modules\Utils\ImageDataRepository\ImageDataRepository.csproj", "{0E29861F-CAF5-4B59-A525-A64C084D1763}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticatorClient", "..\..\Modules\Clients\AuthenticatorClient\AuthenticatorClient.csproj", "{9705923D-A4F4-4EB5-B8DB-6E9AF6939042}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientInterfaces", "..\..\Modules\Interfaces\ClientInterfaces\ClientInterfaces.csproj", "{431AEFF1-0881-4873-B1CB-268694485C60}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6F87C851-F22E-4885-98F4-AC639A0BB47D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F87C851-F22E-4885-98F4-AC639A0BB47D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F87C851-F22E-4885-98F4-AC639A0BB47D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F87C851-F22E-4885-98F4-AC639A0BB47D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB90127B-E8B2-4137-8B00-4E224EA62F58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB90127B-E8B2-4137-8B00-4E224EA62F58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB90127B-E8B2-4137-8B00-4E224EA62F58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB90127B-E8B2-4137-8B00-4E224EA62F58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E29861F-CAF5-4B59-A525-A64C084D1763}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E29861F-CAF5-4B59-A525-A64C084D1763}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E29861F-CAF5-4B59-A525-A64C084D1763}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E29861F-CAF5-4B59-A525-A64C084D1763}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9705923D-A4F4-4EB5-B8DB-6E9AF6939042}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9705923D-A4F4-4EB5-B8DB-6E9AF6939042}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9705923D-A4F4-4EB5-B8DB-6E9AF6939042}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9705923D-A4F4-4EB5-B8DB-6E9AF6939042}.Release|Any CPU.Build.0 = Release|Any CPU
+		{431AEFF1-0881-4873-B1CB-268694485C60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{431AEFF1-0881-4873-B1CB-268694485C60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{431AEFF1-0881-4873-B1CB-268694485C60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{431AEFF1-0881-4873-B1CB-268694485C60}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {972ECF5D-D297-4CEB-9055-4198DD9571E4}
+	EndGlobalSection
+EndGlobal

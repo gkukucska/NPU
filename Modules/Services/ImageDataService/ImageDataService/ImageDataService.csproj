@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>NPU.ImageDataService</RootNamespace>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<Protobuf Include="../../../../Protos/ImageDataProtocols/ImageDataProtocols.proto" GrpcServices="Server" />
+		<Protobuf Include="../../../../Protos/AuthenticationProtocols/AuthenticationProtocols.proto" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Clients\AuthenticatorClient\AuthenticatorClient.csproj" />
+    <ProjectReference Include="..\..\..\Interfaces\ClientInterfaces\ClientInterfaces.csproj" />
+    <ProjectReference Include="..\..\..\Utils\ImageDataRepository\ImageDataRepository.csproj" />
+  </ItemGroup>
+
+</Project>

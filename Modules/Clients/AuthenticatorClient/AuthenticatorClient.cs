@@ -4,6 +4,7 @@ using Grpc.Core;
 using Grpc.Net.Client;
 using NPU.Protocols;
 using System.Net;
+using System.Security;
 using static NPU.Protocols.AuthenticationService;
 
 namespace NPU.Clients.AuthenticatorClient
@@ -30,5 +31,12 @@ namespace NPU.Clients.AuthenticatorClient
                 UserName = username,
                 Password = password
             }, cancellationToken: token).ResponseAsync;
+
+        public Task<bool> ValidateSessionAsync(string userName,string sessionToken, CancellationToken token)
+            => _authenticationServiceClient.ValidateSessionAsync(new SessionData()
+            {
+                UserName = userName,
+                SessionToken = sessionToken
+            },cancellationToken: token).ResponseAsync.ContinueWith((t)=>t.Result.IsValid);
     }
 }
