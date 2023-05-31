@@ -50,6 +50,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\..\Modules\Clients\AuthenticatorClient\AuthenticatorClient.csproj" />
+	  <ProjectReference Include="..\..\..\Modules\Clients\RegistrationClient\RegistrationClient.csproj" />
 	  <ProjectReference Include="..\..\..\Modules\GUI\Pages\LoginPage\LoginPage.csproj" />
 	</ItemGroup>
 

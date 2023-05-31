@@ -7,11 +7,13 @@ namespace NPU.GUI.LoginPage
     // All the code in this file is included in all platforms.
     public partial class LoginPageViewModel:ObservableObject
     {
-        private static IAuthenticatorClient _client;
+        private IAuthenticatorClient _aurthenticatorClient;
+        private IRegistrationClient _registrationClient;
 
-        public LoginPageViewModel(IAuthenticatorClient client)
+        public LoginPageViewModel(IAuthenticatorClient authenticatorClient,IRegistrationClient registrationClient)
         {
-            _client = client;
+            _aurthenticatorClient = authenticatorClient;
+            _registrationClient = registrationClient;
         }
 
         [ObservableProperty]
@@ -24,14 +26,14 @@ namespace NPU.GUI.LoginPage
         private async void Login(object parameters)
         {
             var data = (List<string>)parameters;
-            await _client.OpenSessionAsync(data[0], data[1]);
+            await _aurthenticatorClient.OpenSessionAsync(data[0], data[1]);
         }
 
         [RelayCommand]
         private async void Register(object parameters)
         {
             var data = (List<string>)parameters;
-            await _client.OpenSessionAsync(data[0], data[1]);
+            await _registrationClient.RegisterAsync(data[0], data[1]);
         }
     }
 }

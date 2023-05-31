@@ -33,7 +33,7 @@ namespace NPU.Utils.FileIOHelpers
                 }
                 _credentialList=_credentialList.Append(new KeyValuePair<string, string>(username, password.EncryptToStoredString()));
             }
-            await FileIOHelpers.Save(username + ";" + password.EncryptToStoredString(), _credentialLocation);
+            await FileIOHelpers.Append(username + ";" + password.EncryptToStoredString(), _credentialLocation);
             return true;
         }
 

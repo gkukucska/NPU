@@ -1,5 +1,6 @@
 ﻿using ClientInterfaces;
 using NPU.Clients.AuthenticatorClient;
+using NPU.Clients.RegistrationClient;
 using System.Reflection;
 
 namespace NPU.MobileFrontend;
@@ -19,7 +20,8 @@ public static class MauiProgram
 
 		builder.Services.AddSingleton<MainPage>();
 		builder.Services.AddSingleton<MainPageViewModel>();
-		builder.Services.AddSingleton<IAuthenticatorClient,AuthenticatorClient>();
+        builder.Services.AddSingleton<IAuthenticatorClient, AuthenticatorClient>();
+        builder.Services.AddSingleton<IRegistrationClient, RegistrationClient>();
 
 
 

@@ -7,6 +7,7 @@
              x:Class="NPU.GUI.LoginPage.LoginPage">
     <ContentView.Resources>
         <converters:PasswordEncriptionConverter x:Key="PasswordEncriptionConverter"/>
+        <converters:StringArrayToListMultiConverter x:Key="StringArrayToListMultiConverter"/>
     </ContentView.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -30,12 +31,25 @@
                IsPassword="True"
                Text="{Binding Password, Converter={StaticResource PasswordEncriptionConverter}, Mode=OneWayToSource}"/>
         <Button Grid.Row="5"
-                Text="Log in"/>
-        <Button Grid.Row="5"
                 Text="Log in"
-                Command="{Binding LoginCommand}"/>
+                Command="{Binding LoginCommand}">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource StringArrayToListMultiConverter}">
+                    <Binding Path="Username"/>
+                    <Binding Path="Password"/>
+                </MultiBinding>
+            </Button.CommandParameter>
+        </Button>
         <Button Grid.Row="6"
                 Text="Register"
-                Command="{Binding RegisterCommand}"/>
+                Command="{Binding RegisterCommand}">
+
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource StringArrayToListMultiConverter}">
+                    <Binding Path="Username"/>
+                    <Binding Path="Password"/>
+                </MultiBinding>
+            </Button.CommandParameter>
+        </Button>
     </Grid>
 </ContentView>

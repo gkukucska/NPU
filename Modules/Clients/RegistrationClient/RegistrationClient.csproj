@@ -1,10 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>NPU.Clients.AuthenticatorClient</RootNamespace>
+    <RootNamespace>NPU.Clients.RegistrationClient</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,7 +21,8 @@
     <ProjectReference Include="..\..\Interfaces\ClientInterfaces\ClientInterfaces.csproj" />
   </ItemGroup>
 	<ItemGroup>
-		<Protobuf Include="../../../Protos/AuthenticationProtocols/AuthenticationProtocols.proto" GrpcServices="Client" />
+		<Protobuf Include="../../../Protos/AuthenticationProtocols/RegistrationProtocols.proto" GrpcServices="Client" />
 	</ItemGroup>
+
 
 </Project>

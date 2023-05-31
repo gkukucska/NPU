@@ -27,7 +27,7 @@ namespace NPU.Utils.EncriptionServices
             return Convert.ToBase64String(KeyDerivation.Pbkdf2(
                                                         password: input,
                                                         salt: storesalt,
-                                                        prf: KeyDerivationPrf.HMACSHA1,
+                                                        prf: KeyDerivationPrf.HMACSHA256,
                                                         iterationCount: 100000,
                                                         numBytesRequested: 256 / 8));
         }

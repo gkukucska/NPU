@@ -24,6 +24,11 @@
             }
         }
 
+        public static async Task Append(string data, string filename)
+        {
+            await File.AppendAllLinesAsync(filename, Enumerable.Repeat(data, 1));
+        }
+
         public static async Task Save(string data, string filename)
         {
             List<string> list = new List<string>();
@@ -35,6 +40,7 @@
                     list.Add(line);
                 }
             }
+            list.Add(data);
             await Save(list,filename);
         }
 

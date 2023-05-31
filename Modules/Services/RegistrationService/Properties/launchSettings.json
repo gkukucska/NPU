@@ -1,13 +1,12 @@
-﻿{
+{
   "profiles": {
     "RegistrationService": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": false,
-      "applicationUrl": "http://localhost:5077;https://localhost:7077",
+      "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "https://localhost:50540;http://localhost:50542"
     }
   }
 }
