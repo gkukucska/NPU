@@ -1,6 +1,8 @@
 ﻿using ClientInterfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Controls.PlatformConfiguration;
+using NPU.Utils.GUIConstants;
 
 namespace NPU.GUI.LoginPage
 {
@@ -17,9 +19,6 @@ namespace NPU.GUI.LoginPage
         }
 
         [ObservableProperty]
-        private bool _isLogedIn;
-
-        [ObservableProperty]
         private string _status;
 
         [ObservableProperty]
@@ -28,6 +27,9 @@ namespace NPU.GUI.LoginPage
         [ObservableProperty]
         private string _password;
 
+        [ObservableProperty]
+        private bool _canRegister;
+
         [RelayCommand]
         private async void Login(object parameters)
         {
@@ -35,13 +37,18 @@ namespace NPU.GUI.LoginPage
             try
             {
                 var data = (List<string>)parameters;
-                await _aurthenticatorClient.OpenSessionAsync(data[0], data[1]);
-                IsLogedIn = true;
+                var token = await _aurthenticatorClient.OpenSessionAsync(data[0], data[1]);
+                if (!string.IsNullOrEmpty(token))
+                {
+                    await SecureStorage.SetAsync(GUIConstants.SESSIONTOKEN, token);
+                    await Shell.Current.GoToAsync(GUIConstants.HOMEPAGEROUTE);
+                    return;
+                }
+                Status = "Failed to log in";
             }
             catch (Exception)
             {
                 Status = "Failed to log in";
-                IsLogedIn=false;
             }
         }
 
@@ -52,7 +59,12 @@ namespace NPU.GUI.LoginPage
             try
             {
                 var data = (List<string>)parameters;
-                await _registrationClient.RegisterAsync(data[0], data[1]);
+                if (await _registrationClient.RegisterAsync(data[0], data[1]))
+                {
+                    Status = "Registration succesfull";
+                    return;
+                }
+                Status = "Failed to register";
             }
             catch (Exception e)
             {
@@ -67,11 +79,18 @@ namespace NPU.GUI.LoginPage
             try
             {
                 var data = (List<string>)parameters;
-                await _registrationClient.ValidateRegistrationDataAsync(data[0], data[1]);
+                if (await _registrationClient.ValidateRegistrationDataAsync(data[0], data[1]))
+                {
+                    CanRegister = true;
+                    return;
+                };
+                CanRegister = false;
+                Status = "Registration failed, username taken or password not valid";
             }
             catch (Exception e)
             {
-                Status = "Registration failed, invalid username or password";
+                CanRegister = false;
+                Status = "Registration failed, username taken or password not valid";
             }
         }
     }

@@ -50,8 +50,11 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\..\Modules\Clients\AuthenticatorClient\AuthenticatorClient.csproj" />
+	  <ProjectReference Include="..\..\..\Modules\Clients\ImageDataClient\ImageDataClient.csproj" />
 	  <ProjectReference Include="..\..\..\Modules\Clients\RegistrationClient\RegistrationClient.csproj" />
+	  <ProjectReference Include="..\..\..\Modules\GUI\Pages\HomePage\HomePage.csproj" />
 	  <ProjectReference Include="..\..\..\Modules\GUI\Pages\LoginPage\LoginPage.csproj" />
+	  <ProjectReference Include="..\GUIConstants\GUIConstants.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

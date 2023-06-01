@@ -18,6 +18,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\Interfaces\ClientInterfaces\ClientInterfaces.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Protobuf Include="../../../Protos/ImageDataProtocols/ImageDataProtocols.proto" GrpcServices="Client" />
 	</ItemGroup>
 </Project>

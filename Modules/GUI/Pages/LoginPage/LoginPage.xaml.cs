@@ -2,8 +2,10 @@ using ClientInterfaces;
 
 namespace NPU.GUI.LoginPage;
 
-public partial class LoginPage : ContentView
+public partial class LoginPage : ContentPage
 {
+
+    private LoginPageViewModel _viewModel;
     public LoginPage()
     {
         HandlerChanged += LoginPage_HandlerChanged;

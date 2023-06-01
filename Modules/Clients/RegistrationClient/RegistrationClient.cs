@@ -17,18 +17,18 @@ namespace NPU.Clients.RegistrationClient
             _registrationServiceClient = new RegistrationServiceClient(_channel);
         }
 
-        public Task RegisterAsync(string userName, string password, CancellationToken token)
+        public Task<bool> RegisterAsync(string userName, string password, CancellationToken token)
             => _registrationServiceClient.RegisterAsync(new RegistrationData()
             {
                 UserName = userName,
                 Password = password
-            }, cancellationToken: token).ResponseAsync;
+            }, cancellationToken: token).ResponseAsync.ContinueWith((t)=>t.Result.IsSucceeded);
 
-        public Task ValidateRegistrationDataAsync(string userName, string password, CancellationToken token)
+        public Task<bool> ValidateRegistrationDataAsync(string userName, string password, CancellationToken token)
             => _registrationServiceClient.ValidateRegistrationDataAsync(new RegistrationData()
             {
                 UserName = userName,
                 Password = password
-            }, cancellationToken: token).ResponseAsync;
+            }, cancellationToken: token).ResponseAsync.ContinueWith((t) => t.Result.IsValid);
     }
 }

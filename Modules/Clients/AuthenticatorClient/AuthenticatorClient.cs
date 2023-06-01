@@ -25,12 +25,12 @@ namespace NPU.Clients.AuthenticatorClient
                 SessionToken = sessiontoken
             }, cancellationToken: token).ResponseAsync;
 
-        public Task OpenSessionAsync(string username, string password, CancellationToken token)
+        public Task<string> OpenSessionAsync(string username, string password, CancellationToken token)
             => _authenticationServiceClient.OpenSessionAsync(new LoginCredentialData()
             {
                 UserName = username,
                 Password = password
-            }, cancellationToken: token).ResponseAsync;
+            }, cancellationToken: token).ResponseAsync.ContinueWith((t)=>t.Result.SessionToken);
 
         public Task<bool> ValidateSessionAsync(string userName,string sessionToken, CancellationToken token)
             => _authenticationServiceClient.ValidateSessionAsync(new SessionData()
