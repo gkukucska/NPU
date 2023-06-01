@@ -15,7 +15,7 @@ namespace NPU.Utils.ImageDataRepository
 
         public async Task SaveImageDescription(string userName, string imageID, string description, CancellationToken cancellationToken)
         {
-            var imageDescriptionFile = GetUserSpecificDirectory(userName) + "/ImageDescriptions.dat";
+            var imageDescriptionFile = GetImageDescriptionFile(userName);
             await FileIOHelpers.FileIOHelpers.Append(imageID + ";" + description, imageDescriptionFile, cancellationToken);
         }
 
@@ -37,21 +37,16 @@ namespace NPU.Utils.ImageDataRepository
             return FileIOHelpers.FileIOHelpers.LoadBytes(files.ToList()[index], cancellationToken);
         }
 
-        private static string GetUserSpecificDirectory(string userName)
-        {
-            return _imageDictionary + "/" + userName.EncryptToStoredString();
-        }
-
         public async Task<string> GetImageDescriptionFromId(string userName, string imageID, CancellationToken cancellationToken)
         {
-            var data = (await FileIOHelpers.FileIOHelpers.Load(GetUserSpecificDirectory(userName) + "/ImageDescriptions.dat", cancellationToken))
+            var data = (await FileIOHelpers.FileIOHelpers.Load(GetImageDescriptionFile(userName), cancellationToken))
                                 .Select(x => new KeyValuePair<string, string>(x.Split(";")[0], x.Split(";")[1]));
             return data.FirstOrDefault(x => x.Key.Equals(imageID)).Value;
         }
 
         public async Task<string> GetNextImageDescriptionFromId(string userName, string imageID, CancellationToken cancellationToken)
         {
-            var data = (await FileIOHelpers.FileIOHelpers.Load(GetUserSpecificDirectory(userName) + "/ImageDescriptions.dat", cancellationToken))
+            var data = (await FileIOHelpers.FileIOHelpers.Load(GetImageDescriptionFile(userName), cancellationToken))
                                 .Select(x => new KeyValuePair<string, string>(x.Split(";")[0], x.Split(";")[1]));
             var kvpair = data.FirstOrDefault(x => x.Key.Equals(imageID));
             var index = data.ToList().IndexOf(kvpair) + 1;
@@ -70,9 +65,25 @@ namespace NPU.Utils.ImageDataRepository
 
         public async Task<string> GetFirstImageDescription(string userName, CancellationToken cancellationToken)
         {
-            var imageDescriptionFile = GetUserSpecificDirectory(userName) + "/ImageDescriptions.dat";
+            var imageDescriptionFile = GetImageDescriptionFile(userName);
             var descriptions = await FileIOHelpers.FileIOHelpers.Load(imageDescriptionFile, cancellationToken);
             return descriptions.First();
+        }
+
+        public async Task RemoveImage(string userName, string imageID, CancellationToken cancellationToken)
+        {
+            var filename = Directory.GetFiles(GetUserSpecificDirectory(userName)).First(x => x.Equals(imageID + ".dat"));
+            await FileIOHelpers.FileIOHelpers.RemoveFile(filename, cancellationToken);
+        }
+
+
+        private static string GetUserSpecificDirectory(string userName)
+        {
+            return _imageDictionary + "/" + userName.EncryptToStoredString();
+        }
+        private static string GetImageDescriptionFile(string userName)
+        {
+            return GetUserSpecificDirectory(userName) + "/ImageDescriptions.dat";
         }
     }
 }

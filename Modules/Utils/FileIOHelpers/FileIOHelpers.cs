@@ -63,5 +63,11 @@
         {
             return Path.Combine(Directory.GetCurrentDirectory(), filename);
         }
+
+        public static Task RemoveFile(string filename, CancellationToken cancellationToken)
+        {
+            File.Delete(filename);
+            return Task.CompletedTask;
+        }
     }
 }

@@ -1,5 +1,6 @@
 using ClientInterfaces;
 using Google.Protobuf;
+using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using NPU.Protocols;
 using NPU.Utils.ImageDataRepository;
@@ -60,6 +61,15 @@ namespace NPU.ImageDataService.Services
                 return new ImageIdentiferData() { ImageID = imageID, SessionData = request.SessionData };
             }
             return new ImageIdentiferData() { };
+        }
+
+        public override async Task<Empty> RemoveImageData(ImageIdentiferData request, ServerCallContext context)
+        {
+            if (await _authenticatorClient.ValidateSessionAsync(request.SessionData.UserName, request.SessionData.SessionToken, context.CancellationToken))
+            {
+                await _repository.RemoveImage(request.SessionData.UserName, request.ImageID, context.CancellationToken);
+            }
+            return new Empty();
         }
     }
 }
