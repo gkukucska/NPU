@@ -9,26 +9,29 @@ namespace NPU.Clients.RegistrationClient
 {
     public class RegistrationClient : IRegistrationClient
     {
-        private RegistrationServiceClient _registrationServiceClient;
-        private GrpcChannel _channel;
-        public RegistrationClient()
-        {
-            _channel = GrpcChannel.ForAddress("http://localhost:5005", new GrpcChannelOptions() { MaxRetryAttempts = 1 });
-            _registrationServiceClient = new RegistrationServiceClient(_channel);
-        }
-
         public Task<bool> RegisterAsync(string userName, string password, CancellationToken token)
-            => _registrationServiceClient.RegisterAsync(new RegistrationData()
+        {
+            var channel = GrpcChannel.ForAddress("http://localhost:5005", new GrpcChannelOptions() { MaxRetryAttempts = 1 });
+            var registrationServiceClient = new RegistrationServiceClient(channel);
+            var grpctask = registrationServiceClient.RegisterAsync(new RegistrationData()
             {
                 UserName = userName,
                 Password = password
-            }, cancellationToken: token).ResponseAsync.ContinueWith((t)=>t.Result.IsSucceeded);
-
+            }, cancellationToken: token).ResponseAsync;
+            grpctask.ContinueWith(t => { channel.Dispose(); });
+            return grpctask.ContinueWith((t) => t.Result.IsSucceeded);
+        }
         public Task<bool> ValidateRegistrationDataAsync(string userName, string password, CancellationToken token)
-            => _registrationServiceClient.ValidateRegistrationDataAsync(new RegistrationData()
+        {
+            var channel = GrpcChannel.ForAddress("http://localhost:5005", new GrpcChannelOptions() { MaxRetryAttempts = 1 });
+            var registrationServiceClient = new RegistrationServiceClient(channel);
+            var grpctask = registrationServiceClient.ValidateRegistrationDataAsync(new RegistrationData()
             {
                 UserName = userName,
                 Password = password
-            }, cancellationToken: token).ResponseAsync.ContinueWith((t) => t.Result.IsValid);
+            }, cancellationToken: token).ResponseAsync;
+            grpctask.ContinueWith(t => { channel.Dispose(); });
+            return grpctask.ContinueWith((t) => t.Result.IsValid);
+        }
     }
 }

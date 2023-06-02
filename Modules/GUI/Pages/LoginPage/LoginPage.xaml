@@ -27,7 +27,7 @@
                IsPassword="False"
                 Margin="10"
                 Placeholder="Username"
-               Text="{Binding Username}"/>
+               Text="{Binding UserName}"/>
         <Label Grid.Row="3"
                Text="Password:"/>
         <Entry Grid.Row="4"

@@ -22,7 +22,13 @@ namespace NPU.GUI.LoginPage
         private string _status;
 
         [ObservableProperty]
-        private string _username;
+        private static string _userName;
+        private static string _username;
+        public static string Username => _username;
+
+        [ObservableProperty]
+        private static string _sessionToken;
+        public static string Sessiontoken => _sessionToken;
 
         [ObservableProperty]
         private string _password;
@@ -37,11 +43,11 @@ namespace NPU.GUI.LoginPage
             try
             {
                 var data = (List<string>)parameters;
-                var token = await _aurthenticatorClient.OpenSessionAsync(Username, Password);
+                var token = await _aurthenticatorClient.OpenSessionAsync(UserName, Password);
                 if (!string.IsNullOrEmpty(token))
                 {
-                    await SecureStorage.SetAsync(GUIConstants.SESSIONTOKEN, token);
-                    await SecureStorage.SetAsync(GUIConstants.USERNAME, Username);
+                    _sessionToken = token;
+                    _username = UserName;
                     await Shell.Current.GoToAsync(GUIConstants.HOMEPAGEROUTE);
                     return;
                 }

@@ -2,25 +2,12 @@
 <TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:NPU.GUI.Pages"
+            xmlns:uploadpage="clr-namespace:NPU.Pages;assembly=ImageUploadPage"
+            
              x:DataType="local:HomePageViewModel"
              x:Class="NPU.GUI.Pages.HomePage">
-    <ContentPage  Title="My images">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="9*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <ListView Grid.Row="0"
-                      Grid.RowSpan="2"
-                      Scrolled="ListView_Scrolled">
-            </ListView>
-            <Button Grid.Row="1" 
-                    Text="Add new image"
-                    Margin="10"
-                    Command="{Binding TakePhotoCommand}"
-                    CornerRadius="5"/>
-        </Grid>
-    </ContentPage>
+    <uploadpage:ImageUploadPage Title="Add new image"/>
+    <uploadpage:ImageUploadPage Title="My images"/>
     <ContentPage  Title="Liked images">
         <Label Text="Not yet implemented"/>
     </ContentPage>
@@ -28,8 +15,7 @@
         <Label Text="Not yet implemented"/>
     </ContentPage>
     <ContentPage  Title="Settings">
-        <Button Grid.Row="1" 
-                Text="Logout"
+        <Button Text="Logout"
                 HeightRequest="50"
                 WidthRequest="100"
                 Command="{Binding LogoutCommand}"

@@ -17,6 +17,10 @@
 
         public static async Task Save(Stream stream, string filename, CancellationToken token)
         {
+            if (!Directory.Exists(Path.GetDirectoryName( GetPath(filename))))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(GetPath(filename)));
+            }
             using (var filestream = new FileStream(GetPath(filename), FileMode.OpenOrCreate))
             {
                 stream.CopyTo(filestream);

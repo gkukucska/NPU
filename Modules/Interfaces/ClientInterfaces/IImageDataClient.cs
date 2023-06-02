@@ -12,7 +12,7 @@ namespace ClientInterfaces
         Task<Tuple<byte[], string>> GetImageDataAsync(string userName, string sessionToken, string imageID, CancellationToken token);
         Task<Tuple<byte[], string>> GetNextImageDataAsync(string userName, string sessionToken, string imageID, CancellationToken token);
         Task RemoveImageDataAsync(string userName, string sessionToken, string imageID, CancellationToken token);
-        Task<string> SaveImageDataAsync(string userName, string sessionToken, byte[] imageData, CancellationToken token);
+        Task<string> SaveImageDataAsync(string userName, string sessionToken, byte[] imageData, string description, CancellationToken token);
     }
 
     public static class ImageDataClientExtensions
@@ -33,10 +33,10 @@ namespace ClientInterfaces
             => client.RemoveImageDataAsync(username, sessiontoken, imageID, CancellationToken.None);
         public static void RemoveImageDataA(this IImageDataClient client, string username, string sessiontoken, string imageID)
             => client.RemoveImageDataAsync(username, sessiontoken, imageID, CancellationToken.None).Wait();
-        public static Task< string> SaveImageDataAsync(this IImageDataClient client, string username, string sessiontoken, byte[] imageData)
-            => client.SaveImageDataAsync(username, sessiontoken, imageData, CancellationToken.None);
-        public static string SaveImageData(this IImageDataClient client, string username, string sessiontoken, byte[] imageData)
-            => client.SaveImageDataAsync(username, sessiontoken, imageData, CancellationToken.None).Result;
+        public static Task<string> SaveImageDataAsync(this IImageDataClient client, string username, string sessiontoken, byte[] imageData, string description)
+            => client.SaveImageDataAsync(username, sessiontoken, imageData, description, CancellationToken.None);
+        public static string SaveImageData(this IImageDataClient client, string username, string sessiontoken, byte[] imageData, string description)
+            => client.SaveImageDataAsync(username, sessiontoken, imageData, description, CancellationToken.None).Result;
     }
 
 }

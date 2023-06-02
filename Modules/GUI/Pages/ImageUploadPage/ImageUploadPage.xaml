@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:utils="clr-namespace:NPU.Utils.GUIUtils;assembly=GUIUtils"
+             xmlns:local="clr-namespace:NPU.Pages"
+             x:Class="NPU.Pages.ImageUploadPage"
+             x:DataType="local:ImageUploadPageViewModel"
+             Title="ImageUploadPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Image Source="{Binding ImageSource}" Grid.Row="0"/>
+        <Label Text="Description:" Grid.Row="1"/>
+        <Entry Text="{Binding Description}" Grid.Row="2"/>
+        <Frame BackgroundColor="Transparent" Grid.Row="3" ZIndex="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" 
+                    Text="Take a photo"
+                    Margin="10"
+                    Command="{Binding TakePhotoCommand}"
+                    CornerRadius="5"/>
+                <Button Grid.Column="1" 
+                    Text="Pick a photo"
+                    Margin="10"
+                    Command="{Binding PickAndShowCommand}"
+                    CornerRadius="5"/>
+            </Grid>
+
+        </Frame>
+        <Frame BackgroundColor="Transparent" Grid.Row="4" ZIndex="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" 
+                    Text="Save"
+                    Margin="10"
+                    Command="{Binding SaveImageCommand}"
+                    CornerRadius="5"/>
+                <Button Grid.Column="1" 
+                    Text="Cancel"
+                    Margin="10"
+                    Command="{Binding CancelImageSaveCommand}"
+                    CornerRadius="5"/>
+            </Grid>
+
+        </Frame>
+    </Grid>
+</ContentPage>

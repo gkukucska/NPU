@@ -5,6 +5,7 @@ using NPU.Clients.ImageDataClient;
 using NPU.GUI.LoginPage;
 using System.Reflection;
 using NPU.GUI.Pages;
+using NPU.Interfaces;
 
 namespace NPU.MobileFrontend;
 
@@ -27,6 +28,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IAuthenticatorClient, AuthenticatorClient>();
         builder.Services.AddSingleton<IRegistrationClient, RegistrationClient>();
         builder.Services.AddSingleton<IImageDataClient, ImageDataClient>();
+        builder.Services.AddSingleton<IAuthenticatorProvider, LoginPage>();
 
 
 
