@@ -1,3 +1,5 @@
+using ClientInterfaces;
+
 namespace NPU.GUI.Pages;
 
 public partial class HomePage : TabbedPage
@@ -11,7 +13,8 @@ public partial class HomePage : TabbedPage
 
     private void HomePage_HandlerChanged(object sender, EventArgs e)
     {
-        BindingContext = new HomePageViewModel();
+        var authenticatorClient = Handler.MauiContext.Services.GetService<IAuthenticatorClient>();
+        BindingContext = new HomePageViewModel(authenticatorClient);
     }
 
     private void ListView_Scrolled(object sender, ScrolledEventArgs e)

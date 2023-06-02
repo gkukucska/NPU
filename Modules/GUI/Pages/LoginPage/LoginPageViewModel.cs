@@ -37,10 +37,11 @@ namespace NPU.GUI.LoginPage
             try
             {
                 var data = (List<string>)parameters;
-                var token = await _aurthenticatorClient.OpenSessionAsync(data[0], data[1]);
+                var token = await _aurthenticatorClient.OpenSessionAsync(Username, Password);
                 if (!string.IsNullOrEmpty(token))
                 {
                     await SecureStorage.SetAsync(GUIConstants.SESSIONTOKEN, token);
+                    await SecureStorage.SetAsync(GUIConstants.USERNAME, Username);
                     await Shell.Current.GoToAsync(GUIConstants.HOMEPAGEROUTE);
                     return;
                 }
@@ -59,7 +60,7 @@ namespace NPU.GUI.LoginPage
             try
             {
                 var data = (List<string>)parameters;
-                if (await _registrationClient.RegisterAsync(data[0], data[1]))
+                if (await _registrationClient.RegisterAsync(Username,Password))
                 {
                     Status = "Registration succesfull";
                     return;
@@ -79,7 +80,7 @@ namespace NPU.GUI.LoginPage
             try
             {
                 var data = (List<string>)parameters;
-                if (await _registrationClient.ValidateRegistrationDataAsync(data[0], data[1]))
+                if (await _registrationClient.ValidateRegistrationDataAsync(Username,Password))
                 {
                     CanRegister = true;
                     return;

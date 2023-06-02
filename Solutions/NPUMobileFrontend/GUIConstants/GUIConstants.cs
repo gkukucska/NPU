@@ -3,6 +3,7 @@
     public static class GUIConstants
     {
         public static readonly string SESSIONTOKEN = "SessionToken";
+        public static readonly string USERNAME = "Username";
         public static readonly string HOMEPAGE = "home";
         public static readonly string HOMEPAGEROUTE = "/home";
         public static readonly string MAINPAGE = "main";

@@ -25,11 +25,15 @@
                Text="User name:"/>
         <Entry Grid.Row="2"
                IsPassword="False"
+                Margin="10"
+                Placeholder="Username"
                Text="{Binding Username}"/>
         <Label Grid.Row="3"
                Text="Password:"/>
         <Entry Grid.Row="4"
                IsPassword="True"
+                Margin="10"
+                Placeholder="Password"
                Text="{Binding Password, Converter={StaticResource PasswordEncriptionConverter}, Mode=OneWayToSource}"/>
         <Button Grid.Row="5"
                 Text="Log in"
@@ -37,27 +41,12 @@
                 CornerRadius="5"
                 Background="{StaticResource Primary}"
                 TextColor="{StaticResource White}"
-                Command="{Binding LoginCommand}">
-            <Button.CommandParameter>
-                <MultiBinding Converter="{StaticResource StringArrayToListMultiConverter}">
-                    <Binding Path="Username"/>
-                    <Binding Path="Password"/>
-                </MultiBinding>
-            </Button.CommandParameter>
-        </Button>
+                Command="{Binding LoginCommand}"/>
         <Button Grid.Row="6"
                 Text="Register"
                 Margin="10"
                 CornerRadius="5"
-                Command="{Binding RegisterCommand}">
-
-            <Button.CommandParameter>
-                <MultiBinding Converter="{StaticResource StringArrayToListMultiConverter}">
-                    <Binding Path="Username"/>
-                    <Binding Path="Password"/>
-                </MultiBinding>
-            </Button.CommandParameter>
-        </Button>
+                Command="{Binding RegisterCommand}"/>
         <Label Grid.Row="7"
                Text="{Binding Status}"/>
     </Grid>
