@@ -8,26 +8,26 @@ namespace ClientInterfaces
 {
     public interface IImageDataClient
     {
-        Task<Tuple<byte[], string>> GetFirstImageAsync(string username, string sessiontoken, CancellationToken token);
-        Task<Tuple<byte[], string>> GetImageDataAsync(string userName, string sessionToken, string imageID, CancellationToken token);
-        Task<Tuple<byte[], string>> GetNextImageDataAsync(string userName, string sessionToken, string imageID, CancellationToken token);
+        Task<(byte[] ImageData, string Description, string ImageID)> GetFirstImageAsync(string username, string sessiontoken, CancellationToken token);
+        Task<(byte[] ImageData, string Description, string ImageID)> GetImageDataAsync(string userName, string sessionToken, string imageID, CancellationToken token);
+        Task<(byte[] ImageData, string Description, string ImageID)> GetNextImageDataAsync(string userName, string sessionToken, string imageID, CancellationToken token);
         Task RemoveImageDataAsync(string userName, string sessionToken, string imageID, CancellationToken token);
         Task<string> SaveImageDataAsync(string userName, string sessionToken, byte[] imageData, string description, CancellationToken token);
     }
 
     public static class ImageDataClientExtensions
     {
-        public static Task<Tuple<byte[], string>> GetFirstImageAsync(this IImageDataClient client, string username, string sessiontoken)
+        public static Task<(byte[] ImageData, string Description, string ImageID)> GetFirstImageAsync(this IImageDataClient client, string username, string sessiontoken)
             => client.GetFirstImageAsync(username, sessiontoken, CancellationToken.None);
-        public static Tuple<byte[], string> GetFirstImage(this IImageDataClient client, string username, string sessiontoken)
+        public static (byte[] ImageData, string Description, string ImageID) GetFirstImage(this IImageDataClient client, string username, string sessiontoken)
             => client.GetFirstImageAsync(username, sessiontoken, CancellationToken.None).Result;
-        public static Task<Tuple<byte[], string>> GetImageDataAsync(this IImageDataClient client, string username, string sessiontoken, string imageID)
+        public static Task<(byte[] ImageData, string Description, string ImageID)> GetImageDataAsync(this IImageDataClient client, string username, string sessiontoken, string imageID)
             => client.GetImageDataAsync(username, sessiontoken, imageID, CancellationToken.None);
-        public static Tuple<byte[], string> GetImageData(this IImageDataClient client, string username, string sessiontoken, string imageID)
+        public static (byte[] ImageData, string Description, string ImageID) GetImageData(this IImageDataClient client, string username, string sessiontoken, string imageID)
             => client.GetImageDataAsync(username, sessiontoken, imageID, CancellationToken.None).Result;
-        public static Task<Tuple<byte[], string>> GetNextImageDataAsync(this IImageDataClient client, string username, string sessiontoken, string imageID)
+        public static Task<(byte[] ImageData, string Description, string ImageID)> GetNextImageDataAsync(this IImageDataClient client, string username, string sessiontoken, string imageID)
             => client.GetNextImageDataAsync(username, sessiontoken, imageID, CancellationToken.None);
-        public static Tuple<byte[], string> GetNextImageData(this IImageDataClient client, string username, string sessiontoken, string imageID)
+        public static (byte[] ImageData, string Description, string ImageID) GetNextImageData(this IImageDataClient client, string username, string sessiontoken, string imageID)
             => client.GetNextImageDataAsync(username, sessiontoken, imageID, CancellationToken.None).Result;
         public static Task RemoveImageDataAsync(this IImageDataClient client, string username, string sessiontoken, string imageID)
             => client.RemoveImageDataAsync(username, sessiontoken, imageID, CancellationToken.None);

@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:NPU.GUI.Pages"
-            xmlns:uploadpage="clr-namespace:NPU.Pages;assembly=ImageUploadPage"
-            
-             x:DataType="local:HomePageViewModel"
-             x:Class="NPU.GUI.Pages.HomePage">
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:local="clr-namespace:NPU.GUI.Pages"
+            xmlns:uploadpage="clr-namespace:NPU.Pages.ImageUploadPage;assembly=ImageUploadPage"
+            xmlns:settingspage="clr-namespace:NPU.Pages.SettingsPage;assembly=SettingsPage"
+            xmlns:myimagespage="clr-namespace:NPU.GUI.MyImagesPage;assembly=MyImagesPage"
+            x:DataType="local:HomePageViewModel"
+            x:Class="NPU.GUI.Pages.HomePage">
     <uploadpage:ImageUploadPage Title="Add new image"/>
-    <uploadpage:ImageUploadPage Title="My images"/>
+    <myimagespage:MyImagesPage Title="My images"/>
     <ContentPage  Title="Liked images">
         <Label Text="Not yet implemented"/>
     </ContentPage>
     <ContentPage  Title="Suggested images">
         <Label Text="Not yet implemented"/>
     </ContentPage>
-    <ContentPage  Title="Settings">
-        <Button Text="Logout"
-                HeightRequest="50"
-                WidthRequest="100"
-                Command="{Binding LogoutCommand}"
-                Margin="10"
-                CornerRadius="5"/>
-    </ContentPage>
+    <settingspage:SettingsPage Title="Settings"/>
 </TabbedPage>

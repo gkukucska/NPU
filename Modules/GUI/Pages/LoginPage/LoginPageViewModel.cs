@@ -100,5 +100,18 @@ namespace NPU.GUI.LoginPage
                 Status = "Registration failed, username taken or password not valid";
             }
         }
+
+        public async void CloseSession()
+        {
+            try
+            {
+                _aurthenticatorClient.CloseSession(UserName, SessionToken);
+            }
+            catch (Exception e)
+            {
+            }
+            Status = "Session timed out, logged out";
+            await Shell.Current.GoToAsync(GUIConstants.LOGINPAGEROUTE);
+        }
     }
 }

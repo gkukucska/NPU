@@ -1,9 +1,13 @@
-﻿namespace NPU.Interfaces
+﻿using System.Xml.Serialization;
+
+namespace NPU.Interfaces
 { 
     public interface IAuthenticatorProvider
     {
         string UserName { get; }
         string SessionToken { get; }
+
+        void ForceLogout();
 
     }
 }

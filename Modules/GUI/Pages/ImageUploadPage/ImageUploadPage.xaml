@@ -2,10 +2,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:utils="clr-namespace:NPU.Utils.GUIUtils;assembly=GUIUtils"
-             xmlns:local="clr-namespace:NPU.Pages"
-             x:Class="NPU.Pages.ImageUploadPage"
+             xmlns:local="clr-namespace:NPU.Pages.ImageUploadPage"
+             x:Class="NPU.Pages.ImageUploadPage.ImageUploadPage"
              x:DataType="local:ImageUploadPageViewModel"
              Title="ImageUploadPage">
+    <ContentPage.Resources>
+        <utils:IsNullToBooleanConverter x:Key="IsNullToBooleanConverter"/>
+    </ContentPage.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"/>
@@ -14,7 +17,9 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        <Image Source="{Binding ImageSource}" Grid.Row="0"/>
+        <Image Grid.Row="0"
+               Source="{Binding ImageSource}" 
+               IsVisible="{Binding ImageSource, Converter={StaticResource IsNullToBooleanConverter}}"/>
         <Label Text="Description:" Grid.Row="1"/>
         <Entry Text="{Binding Description}" Grid.Row="2"/>
         <Frame BackgroundColor="Transparent" Grid.Row="3" ZIndex="1">

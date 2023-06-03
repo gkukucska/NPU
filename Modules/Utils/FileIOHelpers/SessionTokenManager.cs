@@ -73,7 +73,13 @@
                 Token = token;
                 _invalidationAction = invalidationAction;
                 _cts = new CancellationTokenSource();
-                _invalidationTask = Task.Delay(_validitySpan, _cts.Token).ContinueWith((t) => _invalidationAction(this));
+                _invalidationTask = Task.Delay(_validitySpan, _cts.Token).ContinueWith((t) =>
+                {
+                    if (!t.IsCanceled)
+                    {
+                        _invalidationAction(this);
+                    }
+                });
             }
 
             private CancellationTokenSource _cts;
@@ -86,7 +92,13 @@
                 _cts.Cancel();
                 _cts.Dispose();
                 _cts = new CancellationTokenSource();
-                _invalidationTask = Task.Delay(_validitySpan, _cts.Token).ContinueWith((t) => _invalidationAction(this));
+                _invalidationTask = Task.Delay(_validitySpan, _cts.Token).ContinueWith((t) =>
+                {
+                    if (!t.IsCanceled)
+                    {
+                        _invalidationAction(this);
+                    }
+                });
             }
         }
     }

@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NPU.Pages
+namespace NPU.Pages.ImageUploadPage
 {
     internal partial class ImageUploadPageViewModel : ObservableObject
     {
@@ -40,24 +40,31 @@ namespace NPU.Pages
         [RelayCommand]
         public async void TakePhoto()
         {
-            if (MediaPicker.Default.IsCaptureSupported)
+            try
             {
-                FileResult photo = await MediaPicker.Default.CapturePhotoAsync();
-
-                if (photo != null)
+                if (MediaPicker.Default.IsCaptureSupported)
                 {
-                    // save the file into local storage
-                    string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
+                    FileResult photo = await MediaPicker.Default.CapturePhotoAsync();
 
-                    using Stream sourceStream = await photo.OpenReadAsync();
-                    using FileStream localFileStream = File.OpenWrite(localFilePath);
+                    if (photo != null)
+                    {
+                        // save the file into local storage
+                        string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
 
-                    await sourceStream.CopyToAsync(localFileStream);
-                    var memorystream = new MemoryStream();
-                    localFileStream.CopyTo(memorystream);
-                    _imageData = memorystream.ToArray();
-                    ImageSource = ImageSource.FromStream(() => memorystream);
+                        using Stream sourceStream = await photo.OpenReadAsync();
+                        using FileStream localFileStream = File.OpenWrite(localFilePath);
+
+                        await sourceStream.CopyToAsync(localFileStream);
+                        var memorystream = new MemoryStream();
+                        localFileStream.CopyTo(memorystream);
+                        _imageData = memorystream.ToArray();
+                        ImageSource = ImageSource.FromStream(() => memorystream);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                // The user canceled or something went wrong
             }
         }
 
@@ -108,7 +115,7 @@ namespace NPU.Pages
         {
             try
             {
-                ImageSource = null;
+                this.ImageSource = null;
                 Description = null;
             }
             catch (Exception ex)

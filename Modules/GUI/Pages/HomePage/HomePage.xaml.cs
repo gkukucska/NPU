@@ -16,9 +16,4 @@ public partial class HomePage : TabbedPage
         var authenticatorClient = Handler.MauiContext.Services.GetService<IAuthenticatorClient>();
         BindingContext = new HomePageViewModel(authenticatorClient);
     }
-
-    private void ListView_Scrolled(object sender, ScrolledEventArgs e)
-    {
-
-    }
 }

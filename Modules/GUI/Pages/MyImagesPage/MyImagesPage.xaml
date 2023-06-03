@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:NPU.GUI.MyImagesPage"
+             xmlns:utils="clr-namespace:NPU.Utils.GUIUtils;assembly=GUIUtils"
+             x:Class="NPU.GUI.MyImagesPage.MyImagesPage"
+             x:DataType="local:MyImagesPageViewModel"
+             Title="MyImagesPage">
+    <ListView ItemsSource="{Binding Images}"
+                  Scrolled="ListView_Scrolled"
+                  VerticalScrollBarVisibility="Always"
+                  ItemDisappearing="ListView_ItemDisappearing">
+        <ListView.ItemTemplate>
+            <DataTemplate x:DataType="utils:ImageItem">
+                <ViewCell>
+                    <Grid>
+                        <Frame WidthRequest="500"
+                               HeightRequest="500">
+                            <Image Source="{Binding ImageSource}" />
+                        </Frame>
+                        <VerticalStackLayout>
+                            <Label Text="Description: "/>
+                            <Label Text="{Binding Description}"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</ContentPage>

@@ -1,20 +1,24 @@
 syntax = "proto3";
 option csharp_namespace = "NPU.Protocols";
 package ImageDataProtocols;
-import "google/protobuf/empty.proto";
 
 
 service ImageDataService{
 	rpc GetFirstImageData (ImageSessionData) returns (ImageData);
 	rpc GetImageData (ImageIdentiferData) returns (ImageData);
 	rpc GetNextImageData (ImageIdentiferData) returns (ImageData);
-	rpc SaveImageData (ImageUploadData) returns (ImageIdentiferData);
-	rpc RemoveImageData (ImageIdentiferData) returns (google.protobuf.Empty);
+	rpc SaveImageData (ImageUploadData) returns (ImageSaveResult);
+	rpc RemoveImageData (ImageIdentiferData) returns (SessionValidity);
 }
 
 message ImageIdentiferData{
 	string ImageID=1;
 	ImageSessionData SessionData=2;
+}
+
+message ImageSaveResult{
+	string ImageID=1;
+	bool IsSessionValid=2;
 }
 
 message ImageUploadData{
@@ -26,9 +30,15 @@ message ImageUploadData{
 message ImageData{
 	bytes SerializedImage=1;
 	string Description=2;
+	string ImageID=3;
+	bool IsSessionValid=4;
 }
 
 message ImageSessionData{
 	string UserName=1;
 	string SessionToken=2;
+}
+
+message SessionValidity{
+	bool IsSessionValid=1;
 }
