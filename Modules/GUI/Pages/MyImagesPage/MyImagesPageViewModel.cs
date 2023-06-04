@@ -32,16 +32,22 @@ namespace NPU.GUI.MyImagesPage
 
         private void _authenticatorProvider_OnLogout(object sender, EventArgs e)
         {
-            Images.Clear();
+            lock (_lock)
+            {
+                Images.Clear();
+            }
         }
 
         private void ImagesChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (Images.Count > 10)
             {
-                while (Images.Count > 10)
+                lock (_lock)
                 {
-                    Images.Remove(Images.First());
+                    while (Images.Count > 10)
+                    {
+                        Images.Remove(Images.First());
+                    }
                 }
             }
         }
@@ -66,7 +72,10 @@ namespace NPU.GUI.MyImagesPage
                     {
                         return;
                     }
-                    Images.Add(new ImageItem(imagedata.ImageData, imagedata.Description, imagedata.ImageID));
+                    lock (_lock)
+                    {
+                        Images.Add(new ImageItem(imagedata.ImageData, imagedata.Description, imagedata.ImageID));
+                    }
                 }
                 catch (Exception e)
                 {

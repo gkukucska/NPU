@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using NPU.Utils.EncriptionServices;
 
-namespace NPU.GUI.LoginPage.Converters
+namespace NPU.Utils.GUIUtils
 {
-    internal class PasswordEncriptionConverter : IValueConverter
+    public class PasswordEncriptionConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

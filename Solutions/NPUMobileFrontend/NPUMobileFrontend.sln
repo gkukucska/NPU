@@ -33,9 +33,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageUploadPage", "..\..\Mo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GUIUtils", "..\..\Modules\Utils\GUIUtils\GUIUtils.csproj", "{14B465FC-DC47-4E7D-B9A0-76D91D86730B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsPage", "..\..\Modules\GUI\Pages\SettingsPage\SettingsPage.csproj", "{80F40D77-4625-4E2F-82D1-8A2254D5F935}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SettingsPage", "..\..\Modules\GUI\Pages\SettingsPage\SettingsPage.csproj", "{80F40D77-4625-4E2F-82D1-8A2254D5F935}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyImagesPage", "..\..\Modules\GUI\Pages\MyImagesPage\MyImagesPage.csproj", "{0FEFEE6F-E152-4BC7-98F6-726E404B8D7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyImagesPage", "..\..\Modules\GUI\Pages\MyImagesPage\MyImagesPage.csproj", "{0FEFEE6F-E152-4BC7-98F6-726E404B8D7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegisterPage", "..\..\Modules\GUI\Pages\RegisterPage\RegisterPage.csproj", "{E1D450D2-5976-4358-BEC9-C1C3A038F255}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,6 +99,10 @@ Global
 		{0FEFEE6F-E152-4BC7-98F6-726E404B8D7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FEFEE6F-E152-4BC7-98F6-726E404B8D7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FEFEE6F-E152-4BC7-98F6-726E404B8D7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1D450D2-5976-4358-BEC9-C1C3A038F255}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1D450D2-5976-4358-BEC9-C1C3A038F255}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1D450D2-5976-4358-BEC9-C1C3A038F255}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1D450D2-5976-4358-BEC9-C1C3A038F255}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,6 +120,7 @@ Global
 		{14B465FC-DC47-4E7D-B9A0-76D91D86730B} = {E69FA3AF-5A35-4168-813D-F17615BAC72A}
 		{80F40D77-4625-4E2F-82D1-8A2254D5F935} = {6505C54A-D29C-4311-8CEF-1A5B53913CCD}
 		{0FEFEE6F-E152-4BC7-98F6-726E404B8D7F} = {6505C54A-D29C-4311-8CEF-1A5B53913CCD}
+		{E1D450D2-5976-4358-BEC9-C1C3A038F255} = {6505C54A-D29C-4311-8CEF-1A5B53913CCD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
