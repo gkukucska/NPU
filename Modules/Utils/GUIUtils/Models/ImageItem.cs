@@ -17,17 +17,14 @@ namespace NPU.Utils.GUIUtils
         [ObservableProperty]
         private bool _isLiked;
 
-        public ImageItem(byte[] imageSource, string description, string imageID)
+        byte[] _imageData;
+
+        public ImageItem(byte[] imageData, string description, string imageID)
         {
             Description = description;
             ImageID = imageID;
-            var stream= new MemoryStream(imageSource);
-            stream.Position = 0;
-            var filename = Path.Combine(FileSystem.CacheDirectory, imageSource.GetHashCode() + ".dat") ;
-            var filestream = new FileStream(filename, FileMode.CreateNew); 
-            stream.CopyTo(filestream);
-            filestream.Flush();
-            ImageSource = ImageSource.FromFile(filename);
+            _imageData = imageData;
+            ImageSource = ImageSource.FromStream(() => new MemoryStream(_imageData));
         }
     }
 }

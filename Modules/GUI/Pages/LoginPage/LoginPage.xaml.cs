@@ -21,9 +21,12 @@ public partial class LoginPage : ContentPage, IAuthenticatorProvider
 
     public string SessionToken => LoginPageViewModel.StaticSessionToken;
 
+    public event EventHandler<EventArgs> OnLogout;
+
     public void ForceLogout()
     {
         Dispatcher.Dispatch(() => _viewModel?.CloseSession());
+        OnLogout?.Invoke(this, EventArgs.Empty);
     }
 
     private void LoginPage_HandlerChanged(object sender, EventArgs e)

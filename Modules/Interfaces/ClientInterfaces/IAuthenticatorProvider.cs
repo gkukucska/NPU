@@ -9,5 +9,7 @@ namespace NPU.Interfaces
 
         void ForceLogout();
 
+        event EventHandler<EventArgs> OnLogout;
+
     }
 }

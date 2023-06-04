@@ -15,8 +15,8 @@ namespace NPU.GUI.MyImagesPage
     {
         private IImageDataClient _imageDataClient;
         private IAuthenticatorProvider _authenticatorProvider;
-        private static readonly int _initialImageCount=5;
-        private object _lock=new object();
+        private static readonly int _initialImageCount = 5;
+        private object _lock = new object();
 
         [ObservableProperty]
         private ObservableCollection<ImageItem> _images = new ObservableCollection<ImageItem>();
@@ -25,26 +25,28 @@ namespace NPU.GUI.MyImagesPage
         {
             this._imageDataClient = imageDataClient;
             this._authenticatorProvider = authenticatorProvider;
+            _authenticatorProvider.OnLogout += _authenticatorProvider_OnLogout;
             Images.CollectionChanged += ImagesChanged;
             LoadNextImages(_initialImageCount);
         }
 
+        private void _authenticatorProvider_OnLogout(object sender, EventArgs e)
+        {
+            Images.Clear();
+        }
+
         private void ImagesChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (Images.Count>10)
+            if (Images.Count > 10)
             {
-                lock (_lock)
+                while (Images.Count > 10)
                 {
-
-                    while (Images.Count > 10)
-                    {
-                        Images.Remove(Images.First());
-                    }
+                    Images.Remove(Images.First());
                 }
             }
         }
 
-        public async Task LoadNextImages(int? count=null)
+        public async ValueTask LoadNextImages(int? count = null)
         {
             count = count ?? _initialImageCount;
             for (int i = 0; i < count; i++)
@@ -60,15 +62,11 @@ namespace NPU.GUI.MyImagesPage
                     {
                         imagedata = await _imageDataClient.GetNextImageDataAsync(_authenticatorProvider.UserName, _authenticatorProvider.SessionToken, Images.Last().ImageID);
                     }
-                    if (imagedata.ImageData.Length==0)
+                    if (imagedata.ImageData.Length == 0)
                     {
                         return;
                     }
-                    lock (_lock)
-                    {
-                        Images.Add(new ImageItem(imagedata.ImageData, imagedata.Description, imagedata.ImageID));
-                    }
-                    OnPropertyChanged(nameof(Images));
+                    Images.Add(new ImageItem(imagedata.ImageData, imagedata.Description, imagedata.ImageID));
                 }
                 catch (Exception e)
                 {
@@ -77,7 +75,7 @@ namespace NPU.GUI.MyImagesPage
             }
         }
 
-        public void LoadNextImage()
+        public ValueTask LoadNextImage()
             => LoadNextImages(1);
     }
 }

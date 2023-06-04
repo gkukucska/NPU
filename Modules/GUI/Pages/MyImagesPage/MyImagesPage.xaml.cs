@@ -7,7 +7,7 @@ public partial class MyImagesPage : ContentPage
 {
 
     private static MyImagesPageViewModel _viewModel;
-	public MyImagesPage()
+    public MyImagesPage()
     {
         HandlerChanged += ImageUploadPage_HandlerChanged;
         NavigatedTo += ImageUploadPage_NavigatedTo;
@@ -24,7 +24,7 @@ public partial class MyImagesPage : ContentPage
         var imageDataClient = Handler.MauiContext.Services.GetService<IImageDataClient>();
         var authenticatorProvider = Handler.MauiContext.Services.GetService<IAuthenticatorProvider>();
         BindingContext = new MyImagesPageViewModel(imageDataClient, authenticatorProvider);
-        _viewModel=(MyImagesPageViewModel)BindingContext;
+        _viewModel = (MyImagesPageViewModel)BindingContext;
     }
 
     private void ListView_ItemDisappearing(object sender, ItemVisibilityEventArgs e)
@@ -33,12 +33,9 @@ public partial class MyImagesPage : ContentPage
 
     private void ListView_Scrolled(object sender, ScrolledEventArgs e)
     {
-        if ((sender as ListView).Height *0.7 <e.ScrollY)
+        if ((sender as ListView).Height * 0.7 < e.ScrollY)
         {
-            Task.Run(() =>
-            {
-                _viewModel.LoadNextImage();
-            });
+            _viewModel.LoadNextImage();
 
         }
     }
