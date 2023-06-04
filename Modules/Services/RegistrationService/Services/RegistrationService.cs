@@ -25,7 +25,7 @@ namespace NPU.Services.RegistrationService
                 _logger.LogDebug($"Request for validate registration data with username: {request.UserName}, taskid {Task.CurrentId}");
                 try
                 {
-                    if (_credentialManager.IsCredentialValid(request.UserName, request.Password))
+                    if (_credentialManager.IsUserTaken(request.UserName))
                         return new RegistrationValidationResult() { IsValid = true };
                     return new RegistrationValidationResult() { IsValid = false, InValidReason = "Username already taken" };
                 }

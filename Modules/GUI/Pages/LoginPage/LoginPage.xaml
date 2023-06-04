@@ -3,10 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:NPU.GUI.LoginPage"
              xmlns:converters="clr-namespace:NPU.GUI.LoginPage.Converters"
+             xmlns:utils="clr-namespace:NPU.Utils.GUIUtils;assembly=GUIUtils"
              x:DataType="local:LoginPageViewModel"
              x:Class="NPU.GUI.LoginPage.LoginPage">
     <ContentPage.Resources>
-        <converters:PasswordEncriptionConverter x:Key="PasswordEncriptionConverter"/>
+        <utils:PasswordEncriptionConverter x:Key="PasswordEncriptionConverter"/>
         <converters:StringArrayToListMultiConverter x:Key="StringArrayToListMultiConverter"/>
     </ContentPage.Resources>
     <Grid>

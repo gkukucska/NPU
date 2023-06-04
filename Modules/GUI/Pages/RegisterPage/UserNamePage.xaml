@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:NPU.Pages.RegisterPage"
+             x:Class="NPU.Pages.RegisterPage.UserNamePage"
+             x:DataType="local:UserNamePageViewModel"
+             Title="Add username">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="1"
+               Text="User name:"/>
+        <Entry Grid.Row="2"
+               IsPassword="False"
+               Margin="10"
+               Placeholder="Username"
+               Text="{Binding UserName}"
+               TextChanged="Entry_TextChanged"/>
+        <Button Grid.Row="3"
+                Text="Next"
+                IsEnabled="{Binding CanMoveNext}"
+                Clicked="Button_Clicked"/>
+    </Grid>
+</ContentPage>

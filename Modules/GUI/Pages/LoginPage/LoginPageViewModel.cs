@@ -33,9 +33,6 @@ namespace NPU.GUI.LoginPage
         [ObservableProperty]
         private string _password;
 
-        [ObservableProperty]
-        private bool _canRegister;
-
         [RelayCommand]
         private async void Login(object parameters)
         {
@@ -62,43 +59,7 @@ namespace NPU.GUI.LoginPage
         [RelayCommand]
         private async void Register(object parameters)
         {
-            Status = string.Empty;
-            try
-            {
-                var data = (List<string>)parameters;
-                if (await _registrationClient.RegisterAsync(UserName,Password))
-                {
-                    Status = "Registration succesfull";
-                    return;
-                }
-                Status = "Failed to register";
-            }
-            catch (Exception e)
-            {
-                Status = "Failed to register";
-            }
-        }
-
-        [RelayCommand]
-        private async void ValidateRegistrationData(object parameters)
-        {
-            Status = string.Empty;
-            try
-            {
-                var data = (List<string>)parameters;
-                if (await _registrationClient.ValidateRegistrationDataAsync(UserName,Password))
-                {
-                    CanRegister = true;
-                    return;
-                };
-                CanRegister = false;
-                Status = "Registration failed, username taken or password not valid";
-            }
-            catch (Exception e)
-            {
-                CanRegister = false;
-                Status = "Registration failed, username taken or password not valid";
-            }
+            await Shell.Current.GoToAsync(GUIConstants.REGISTERPAGEROUTE);
         }
 
         public async void CloseSession()
