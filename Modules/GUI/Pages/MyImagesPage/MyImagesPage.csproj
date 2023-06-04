@@ -19,6 +19,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\..\..\Solutions\NPUMobileFrontend\GUIConstants\GUIConstants.csproj" />
 	  <ProjectReference Include="..\..\..\Interfaces\ClientInterfaces\ClientInterfaces.csproj" />
 	  <ProjectReference Include="..\..\..\Utils\GUIUtils\GUIUtils.csproj" />
 	</ItemGroup>

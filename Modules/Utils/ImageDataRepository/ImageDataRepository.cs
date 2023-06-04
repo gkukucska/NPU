@@ -121,7 +121,7 @@ namespace NPU.Utils.ImageDataRepository
                     _logger.LogInformation($"Image with ID {imageID} is the last image of user {username}");
                     return null;
                 }
-                return files[index + 1].FullName;
+                return files[index].FullName;
             }
             else
             {

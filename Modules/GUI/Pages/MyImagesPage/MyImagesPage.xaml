@@ -6,25 +6,39 @@
              x:Class="NPU.GUI.MyImagesPage.MyImagesPage"
              x:DataType="local:MyImagesPageViewModel"
              Title="MyImagesPage">
-    <ListView ItemsSource="{Binding Images}"
+    <Grid x:Name="This">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ListView Grid.Row="0"
+                  Grid.RowSpan="2"
+                  ItemsSource="{Binding Images}"
                   Scrolled="ListView_Scrolled"
                   VerticalScrollBarVisibility="Always"
-                  ItemDisappearing="ListView_ItemDisappearing">
-        <ListView.ItemTemplate>
-            <DataTemplate x:DataType="utils:ImageItem">
-                <ViewCell>
-                    <Grid>
-                        <Frame WidthRequest="500"
+                  ItemDisappearing="ListView_ItemDisappearing"
+                  MaximumHeightRequest="{Binding Source={x:Reference This}, Path=Height}">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="utils:ImageItem">
+                    <ViewCell>
+                        <Grid>
+                            <Frame WidthRequest="500"
                                HeightRequest="500">
-                            <Image Source="{Binding ImageSource}" />
-                        </Frame>
-                        <VerticalStackLayout>
-                            <Label Text="Description: "/>
-                            <Label Text="{Binding Description}"/>
-                        </VerticalStackLayout>
-                    </Grid>
-                </ViewCell>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+                                <Image Source="{Binding ImageSource}" />
+                            </Frame>
+                            <VerticalStackLayout>
+                                <Label Text="Description: "/>
+                                <Label Text="{Binding Description}"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Grid.Row="1"
+                Text="Add image"
+                HeightRequest="50"
+                WidthRequest="100"
+                Command="{Binding AddImageCommand}"/>
+    </Grid>
 </ContentPage>

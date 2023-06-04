@@ -3,23 +3,29 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:utils="clr-namespace:NPU.Utils.GUIUtils;assembly=GUIUtils"
              xmlns:local="clr-namespace:NPU.Pages.ImageUploadPage"
-             x:Class="NPU.Pages.ImageUploadPage.ImageUploadPage"
+             x:Class="NPU.Pages.ImageUploadPage.ImageDescriptionPage"
              x:DataType="local:ImageUploadPageViewModel"
-             Title="ImageUploadPage">
+             Title="ImageDescriptionPage">
     <ContentPage.Resources>
         <utils:IsNullToBooleanConverter x:Key="IsNullToBooleanConverter"/>
-        <utils:IsNullToBooleanConverter x:Key="IsNotNullToBooleanConverter" IsNotNullValue="False" IsNullValue="True"/>
     </ContentPage.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="9*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Image Grid.Row="0"
                Source="{Binding ImageSource}" 
                IsVisible="{Binding ImageSource, Converter={StaticResource IsNullToBooleanConverter}}"/>
-        <Frame BackgroundColor="Transparent" Grid.Row="1" ZIndex="1"
-               IsVisible="{Binding ImageSource, Converter={StaticResource IsNotNullToBooleanConverter}}">
+        <Label Grid.Row="1"
+               Text="Description:"/>
+        <Entry Grid.Row="2"
+               Text="{Binding Description}"/>
+        <Frame Grid.Row="3" 
+               ZIndex="1"
+               BackgroundColor="Transparent">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -27,28 +33,15 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Grid.Column="0" 
-                    Text="Take a photo"
+                    Text="Save"
                     Margin="10"
-                    Command="{Binding TakePhotoCommand}"
+                    Command="{Binding SaveImageCommand}"
                     CornerRadius="5"/>
                 <Button Grid.Column="1" 
-                    Text="Pick a photo"
+                    Text="Cancel"
                     Margin="10"
-                    Command="{Binding PickAndShowCommand}"
+                    Command="{Binding CancelImageSaveCommand}"
                     CornerRadius="5"/>
-            </Grid>
-
-        </Frame>
-        <Frame BackgroundColor="Transparent" Grid.Row="1" ZIndex="1"
-               IsVisible="{Binding ImageSource, Converter={StaticResource IsNullToBooleanConverter}}">
-            <Grid>
-                <Button Grid.Column="0" 
-                        Text="Add description"
-                        WidthRequest="200"
-                        HeightRequest="50"
-                        Margin="10"
-                        Clicked="Button_Clicked"
-                        CornerRadius="5"/>
             </Grid>
 
         </Frame>
