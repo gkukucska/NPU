@@ -48,13 +48,19 @@ namespace NPU.Utils.ImageDataRepository
         public Task<byte[]> GetNextImageByID(string username, CancellationToken cancellationToken, string? imageID = null)
         {
             var nextImageId = GetNextImageId(username, imageID);
+            if(nextImageId == null)
+            {
+                _logger.LogInformation($"No next image found, returning empty image data");
+                return Task.FromResult(new byte[0]);
+            }
             return GetImageByID(username, cancellationToken, nextImageId);
         }
 
 
         public Task<byte[]> GetImageByID(string username, CancellationToken cancellationToken, string? imageID = null)
         {
-            var filename = Directory.GetFiles(GetUserSpecificDirectory(username)).First(x => x.Equals(imageID + _dataFileExtension));
+            var files = Directory.GetFiles(GetUserSpecificDirectory(username));
+            var filename = Directory.GetFiles(GetUserSpecificDirectory(username)).FirstOrDefault(x => x.EndsWith(imageID + _dataFileExtension));
             _logger.LogDebug($"Loading image data from {filename}");
             if (filename == null)
             {
@@ -70,7 +76,7 @@ namespace NPU.Utils.ImageDataRepository
             var imageDescriptions = (await FileIOHelpers.FileIOHelpers.LoadLines(GetImageDescriptionFile(userName), cancellationToken))
                                                                       .Select(x => new KeyValuePair<string, string>(x.Split(";")[0], x.Split(";")[1]));
 
-            return imageDescriptions.FirstOrDefault(x => x.Key.Equals(imageID)).Value;
+            return imageDescriptions.FirstOrDefault(x => x.Key.Equals(imageID)).Value ?? string.Empty;
         }
 
 
@@ -127,6 +133,10 @@ namespace NPU.Utils.ImageDataRepository
 
         private static string GetUniqueGUID(byte[] imageData)
         {
+            if ((imageData?.Length ?? 0)==0)
+            {
+                return string.Empty;
+            }
             using var md5 = MD5.Create();
             md5.TransformFinalBlock(imageData, 0, imageData.Length);
             if (md5.Hash == null)
