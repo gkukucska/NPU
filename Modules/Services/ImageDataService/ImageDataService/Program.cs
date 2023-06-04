@@ -1,6 +1,8 @@
 using ClientInterfaces;
 using NPU.Clients.AuthenticatorClient;
 using NPU.ImageDataService.Services;
+using NPU.Interfaces;
+using NPU.Utils.ImageDataRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddGrpc();
+builder.Services.AddLogging();
 builder.Services.AddSingleton<IAuthenticatorClient, AuthenticatorClient>();
+builder.Services.AddSingleton<IImageDataRepository, ImageDataRepository>();
 
 var app = builder.Build();
 

@@ -7,11 +7,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageDataService", "..\..\M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileIOHelpers", "..\..\Modules\Utils\FileIOHelpers\FileIOHelpers.csproj", "{BB90127B-E8B2-4137-8B00-4E224EA62F58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageDataRepository", "..\..\Modules\Utils\ImageDataRepository\ImageDataRepository.csproj", "{0E29861F-CAF5-4B59-A525-A64C084D1763}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageDataRepository", "..\..\Modules\Utils\ImageDataRepository\ImageDataRepository.csproj", "{0E29861F-CAF5-4B59-A525-A64C084D1763}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticatorClient", "..\..\Modules\Clients\AuthenticatorClient\AuthenticatorClient.csproj", "{9705923D-A4F4-4EB5-B8DB-6E9AF6939042}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientInterfaces", "..\..\Modules\Interfaces\ClientInterfaces\ClientInterfaces.csproj", "{431AEFF1-0881-4873-B1CB-268694485C60}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{05CE488E-0AC6-49B2-8515-D5902BBDBEC3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Interfaces", "Interfaces", "{5FE6F26D-A26E-4158-8DE2-201F93AF1004}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{C81CBC79-EC3C-48D9-A140-7AD056F89B66}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManagerInterfaces", "..\..\Modules\Interfaces\ManagerInterfaces\ManagerInterfaces.csproj", "{0B8C37C9-5CB1-4739-B62B-5AB60D55D05E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,9 +47,20 @@ Global
 		{431AEFF1-0881-4873-B1CB-268694485C60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{431AEFF1-0881-4873-B1CB-268694485C60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{431AEFF1-0881-4873-B1CB-268694485C60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B8C37C9-5CB1-4739-B62B-5AB60D55D05E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B8C37C9-5CB1-4739-B62B-5AB60D55D05E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B8C37C9-5CB1-4739-B62B-5AB60D55D05E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B8C37C9-5CB1-4739-B62B-5AB60D55D05E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BB90127B-E8B2-4137-8B00-4E224EA62F58} = {05CE488E-0AC6-49B2-8515-D5902BBDBEC3}
+		{0E29861F-CAF5-4B59-A525-A64C084D1763} = {05CE488E-0AC6-49B2-8515-D5902BBDBEC3}
+		{9705923D-A4F4-4EB5-B8DB-6E9AF6939042} = {C81CBC79-EC3C-48D9-A140-7AD056F89B66}
+		{431AEFF1-0881-4873-B1CB-268694485C60} = {5FE6F26D-A26E-4158-8DE2-201F93AF1004}
+		{0B8C37C9-5CB1-4739-B62B-5AB60D55D05E} = {5FE6F26D-A26E-4158-8DE2-201F93AF1004}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {972ECF5D-D297-4CEB-9055-4198DD9571E4}

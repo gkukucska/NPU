@@ -17,7 +17,7 @@ namespace NPU.Utils.CredentialManager
 
         public CredentialManager()
         {
-            _credentialList = FileIOHelpers.FileIOHelpers.Load(_credentialLocation,CancellationToken.None).Result.Select(x => new KeyValuePair<string, string>(x.Split(";")[0], x.Split(";")[1]));
+            _credentialList = FileIOHelpers.FileIOHelpers.LoadLines(_credentialLocation,CancellationToken.None).Result.Select(x => new KeyValuePair<string, string>(x.Split(";")[0], x.Split(";")[1]));
         }
 
         public bool IsUserTaken(string username)

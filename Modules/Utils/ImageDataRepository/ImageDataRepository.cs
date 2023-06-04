@@ -1,111 +1,147 @@
-﻿using NPU.Utils.EncriptionServices;
+﻿using Microsoft.Extensions.Logging;
+using NPU.Interfaces;
+using NPU.Utils.EncriptionServices;
 using NPU.Utils.FileIOHelpers;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace NPU.Utils.ImageDataRepository
 {
-    public class ImageDataRepository
+    public class ImageDataRepository : IImageDataRepository
     {
         private static readonly string _imageDictionary = "ImageData";
+        private static readonly string _dataFileExtension = ".dat";
+        private static readonly string _imageDescriptionFile = "\\ImageDescriptions.dat";
+
+        private ILogger<ImageDataRepository> _logger;
+
+        public ImageDataRepository(ILogger<ImageDataRepository> logger)
+        {
+            _logger = logger;
+        }
+
+
         public async Task<string> SaveImage(string userName, byte[] imagedata, CancellationToken cancellationToken)
         {
-            MemoryStream stream = new(imagedata);
-            await FileIOHelpers.FileIOHelpers.Save(stream, GetUserSpecificDirectory(userName) + "\\" + GetUniqueGUID(imagedata) + ".dat", cancellationToken);
-            return userName.EncryptToStoredString() + "\\" + GetUniqueGUID(imagedata);
+            using MemoryStream stream = new(imagedata);
+            var filename = GetUserSpecificDirectory(userName) + "\\" + GetUniqueGUID(imagedata) + _dataFileExtension;
+            _logger.LogDebug($"Saving image data to {filename}");
+            await FileIOHelpers.FileIOHelpers.Save(stream, filename, cancellationToken);
+            return GetUniqueGUID(imagedata);
         }
+
 
         public async Task SaveImageDescription(string userName, string imageID, string description, CancellationToken cancellationToken)
         {
             var imageDescriptionFile = GetImageDescriptionFile(userName);
+            _logger.LogDebug($"Saving image description of image {imageID} to {imageDescriptionFile}");
             await FileIOHelpers.FileIOHelpers.Append(imageID + ";" + description, imageDescriptionFile, cancellationToken);
         }
 
-        public Task<byte[]> GetImageFromID(string username, string imageID, CancellationToken cancellationToken)
+
+        public Task<byte[]> GetNextImageByID(string username, CancellationToken cancellationToken, string? imageID = null)
         {
-            var filename = Directory.GetFiles(GetUserSpecificDirectory(username)).First(x => x.Equals(imageID + ".dat"));
-            return FileIOHelpers.FileIOHelpers.LoadBytes(filename, cancellationToken);
+            var nextImageId = GetNextImageId(username, imageID);
+            return GetImageByID(username, cancellationToken, nextImageId);
         }
 
-        public Task<byte[]> GetNextImageFromID(string username, string imageID, CancellationToken cancellationToken)
+
+        public Task<byte[]> GetImageByID(string username, CancellationToken cancellationToken, string? imageID = null)
         {
-            DirectoryInfo info = new DirectoryInfo(GetUserSpecificDirectory(username));
-            FileInfo[] files = info.GetFiles().OrderBy(p => p.CreationTime).Where(x=>x.FullName!= GetUserSpecificDirectory(username) + "\\ImageDescriptions.dat").ToArray();
-            foreach (FileInfo file in files)
-            {
-                // DO Something...
-            }
-            var filename = files.FirstOrDefault(x => x.Name.Equals(imageID+".dat"));
+            var filename = Directory.GetFiles(GetUserSpecificDirectory(username)).First(x => x.Equals(imageID + _dataFileExtension));
+            _logger.LogDebug($"Loading image data from {filename}");
             if (filename == null)
             {
-                return Task.FromResult(new byte[0]);
-            }
-            var index = files.ToList().IndexOf(filename) + 1;
-            if (index >= files.Count())
-            {
-                return Task.FromResult(new byte[0]);
-            }
-            return FileIOHelpers.FileIOHelpers.LoadBytes(files[index].FullName, cancellationToken);
-        }
-
-        public async Task<string> GetImageDescription(string userName, string imageID, CancellationToken cancellationToken)
-        {
-            var data = (await FileIOHelpers.FileIOHelpers.Load(GetImageDescriptionFile(userName), cancellationToken))
-                                .Select(x => new KeyValuePair<string, string>(x.Split(";")[0], x.Split(";")[1]));
-            
-            var kvpair=data.FirstOrDefault(x => x.Key.EndsWith(imageID));
-            return kvpair.Value;
-        }
-
-        public Task<byte[]> GetFirstImage(string userName, CancellationToken cancellationToken)
-        {
-            var filename = Directory.GetFiles(GetUserSpecificDirectory(userName)).FirstOrDefault();
-            if (filename == null)
-            {
+                _logger.LogWarning($"Cannot find requested file, returning empty image data");
                 return Task.FromResult(new byte[0]);
             }
             return FileIOHelpers.FileIOHelpers.LoadBytes(filename, cancellationToken);
         }
+
+
+        public async Task<string> GetImageDescription(string userName, CancellationToken cancellationToken, string? imageID = null)
+        {
+            var imageDescriptions = (await FileIOHelpers.FileIOHelpers.LoadLines(GetImageDescriptionFile(userName), cancellationToken))
+                                                                      .Select(x => new KeyValuePair<string, string>(x.Split(";")[0], x.Split(";")[1]));
+
+            return imageDescriptions.FirstOrDefault(x => x.Key.Equals(imageID)).Value;
+        }
+
 
         public Task<string> GetImageId(byte[] imageData, CancellationToken cancellationToken)
-        {
-            return Task.FromResult(GetUniqueGUID(imageData).ToString());
-        }
+            => Task.FromResult(GetUniqueGUID(imageData));
 
-        public async Task<string> GetFirstImageDescription(string userName, CancellationToken cancellationToken)
-        {
-            var imageDescriptionFile = GetImageDescriptionFile(userName);
-            var descriptions = await FileIOHelpers.FileIOHelpers.Load(imageDescriptionFile, cancellationToken);
-
-            return descriptions.FirstOrDefault()?.Split(';')[1];
-        }
 
         public async Task RemoveImage(string userName, string imageID, CancellationToken cancellationToken)
         {
-            var filename = Directory.GetFiles(GetUserSpecificDirectory(userName)).First(x => x.Equals(imageID + ".dat"));
+            var filename = Directory.GetFiles(GetUserSpecificDirectory(userName))
+                                    .Select(x=>Path.GetFileNameWithoutExtension(x))
+                                    .FirstOrDefault(x => x.Equals(imageID));
+            if (filename==null)
+            {
+                _logger.LogWarning($"Cannot find file associated with image ID {imageID}");
+                return;
+            }
             await FileIOHelpers.FileIOHelpers.RemoveFile(filename, cancellationToken);
         }
 
 
-        private static string GetUserSpecificDirectory(string userName)
+        private string? GetNextImageId(string username, string? imageID = null)
         {
-            return Path.Combine(Directory.GetCurrentDirectory(), _imageDictionary + "\\" + userName.EncryptToStoredString());
+            var info = new DirectoryInfo(GetUserSpecificDirectory(username));
+            if (!info.Exists)
+            {
+                Directory.CreateDirectory(info.FullName);
+            }
+            var files = info.GetFiles().OrderBy(p => p.CreationTime).Where(x => x.FullName != GetUserSpecificDirectory(username) + _imageDescriptionFile).ToArray();
+            if (imageID != null)
+            {
+                var currentfileinfo = files.FirstOrDefault(x => x.Name.Equals(imageID + _dataFileExtension));
+                if (currentfileinfo == null)
+                {
+                    _logger.LogWarning($"Cannot find file associated with image ID {imageID}");
+                    return null;
+                }
+
+                var index = files.ToList().IndexOf(currentfileinfo) + 1;
+                if (index >= files.Length)
+                {
+                    _logger.LogInformation($"Image with ID {imageID} is the last image of user {username}");
+                    return null;
+                }
+                return files[index + 1].FullName;
+            }
+            else
+            {
+                _logger.LogInformation($"Requested image ID is null, returning the first image ID");
+                return Path.GetFileNameWithoutExtension(files.FirstOrDefault()?.FullName);
+            }
         }
-        private static string GetImageDescriptionFile(string userName)
-        {
-            return GetUserSpecificDirectory(userName) + "\\ImageDescriptions.dat";
-        }
+
 
         private static string GetUniqueGUID(byte[] imageData)
         {
-            using (var md5 = MD5.Create())
+            using var md5 = MD5.Create();
+            md5.TransformFinalBlock(imageData, 0, imageData.Length);
+            if (md5.Hash == null)
             {
-                md5.TransformFinalBlock(imageData, 0, imageData.Length);
-                return string.Concat(md5.Hash.Select(x => x.ToString("X2")));
+                throw new Exception("Cannot create unique ID for image");
             }
+            return string.Concat(md5.Hash.Select(x => x.ToString("X2", CultureInfo.InvariantCulture)));
         }
+
+
+        private static string GetUserSpecificDirectory(string userName)
+            => Path.Combine(Directory.GetCurrentDirectory(), _imageDictionary + "\\" + userName.EncryptToStoredString());
+
+
+        private static string GetImageDescriptionFile(string userName)
+            => GetUserSpecificDirectory(userName) + _imageDescriptionFile;
     }
 }
