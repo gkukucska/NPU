@@ -1,6 +1,8 @@
 ﻿using ClientInterfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using NPU.Interfaces;
+using NPU.Utils.GUIConstants;
 using NPU.Utils.GUIUtils;
 using System;
 using System.Collections.Generic;
@@ -28,6 +30,12 @@ namespace NPU.GUI.MyImagesPage
             _authenticatorProvider.OnLogout += _authenticatorProvider_OnLogout;
             Images.CollectionChanged += ImagesChanged;
             LoadNextImages(_initialImageCount);
+        }
+
+        [RelayCommand]
+        private void AddImage()
+        {
+            Shell.Current.GoToAsync(GUIConstants.IMAGEUPLOADPAGEROUTE);
         }
 
         private void _authenticatorProvider_OnLogout(object sender, EventArgs e)

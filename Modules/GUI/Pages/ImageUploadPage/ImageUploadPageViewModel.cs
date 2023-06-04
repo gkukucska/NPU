@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using NPU.Interfaces;
+using NPU.Utils.GUIConstants;
 using NPU.Utils.GUIUtils;
 using System;
 using System.Collections.Generic;
@@ -13,16 +14,14 @@ using System.Threading.Tasks;
 
 namespace NPU.Pages.ImageUploadPage
 {
-    internal partial class ImageUploadPageViewModel : ObservableObject
+    public partial class ImageUploadPageViewModel : ObservableObject
     {
-        private IAuthenticatorClient _authenticatorClient;
         private IImageDataClient _imageDataClient;
         private IAuthenticatorProvider _authenticatorProvider;
 
-        public ImageUploadPageViewModel(IAuthenticatorClient authenticatorClient, IImageDataClient imageDataClient, IAuthenticatorProvider authenticatorProvider)
+        public ImageUploadPageViewModel(IImageDataClient imageDataClient, IAuthenticatorProvider authenticatorProvider)
         {
             this._authenticatorProvider = authenticatorProvider;
-            this._authenticatorClient = authenticatorClient;
             this._imageDataClient = imageDataClient;
         }
 
@@ -93,21 +92,22 @@ namespace NPU.Pages.ImageUploadPage
         }
 
         [RelayCommand]
-        public Task SaveImage()
+        public async Task SaveImage()
         {
             try
             {
-                return _imageDataClient.SaveImageDataAsync(_authenticatorProvider.UserName,
+                await _imageDataClient.SaveImageDataAsync(_authenticatorProvider.UserName,
                                               _authenticatorProvider.SessionToken,
                                               _imageData,
-                                              Description
+                                              Description ??string.Empty
                                                );
+                Shell.Current.GoToAsync(GUIConstants.HOMEPAGEROUTE);
             }
             catch (Exception ex)
             {
                 // The user canceled or something went wrong
             }
-            return null;
+            return;
         }
 
         [RelayCommand]
@@ -117,6 +117,7 @@ namespace NPU.Pages.ImageUploadPage
             {
                 this.ImageSource = null;
                 Description = null;
+                Shell.Current.GoToAsync(GUIConstants.HOMEPAGEROUTE);
             }
             catch (Exception ex)
             {

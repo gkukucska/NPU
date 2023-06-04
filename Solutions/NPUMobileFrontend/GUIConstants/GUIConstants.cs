@@ -12,5 +12,7 @@
         public static readonly string LOGINPAGEROUTE = "/login";
         public static readonly string REGISTERPAGE = "register";
         public static readonly string REGISTERPAGEROUTE = "/register";
+        public static readonly string IMAGEUPLOADPAGE = "addimage";
+        public static readonly string IMAGEUPLOADPAGEROUTE = "/addimage";
     }
 }

@@ -7,7 +7,6 @@
             xmlns:myimagespage="clr-namespace:NPU.GUI.MyImagesPage;assembly=MyImagesPage"
             x:DataType="local:HomePageViewModel"
             x:Class="NPU.GUI.Pages.HomePage">
-    <uploadpage:ImageUploadPage Title="Add new image"/>
     <myimagespage:MyImagesPage Title="My images"/>
     <ContentPage  Title="Liked images">
         <Label Text="Not yet implemented"/>
