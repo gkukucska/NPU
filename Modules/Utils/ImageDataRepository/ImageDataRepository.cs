@@ -60,7 +60,7 @@ namespace NPU.Utils.ImageDataRepository
         public Task<byte[]> GetImageByID(string username, CancellationToken cancellationToken, string? imageID = null)
         {
             var files = Directory.GetFiles(GetUserSpecificDirectory(username));
-            var filename = Directory.GetFiles(GetUserSpecificDirectory(username)).FirstOrDefault(x => x.EndsWith(imageID + _dataFileExtension));
+            var filename = Directory.GetFiles(GetUserSpecificDirectory(username)).FirstOrDefault(x => x.EndsWith(Path.GetFileNameWithoutExtension( imageID) + _dataFileExtension));
             _logger.LogDebug($"Loading image data from {filename}");
             if (filename == null)
             {
