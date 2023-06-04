@@ -17,9 +17,9 @@ public partial class LoginPage : ContentPage, IAuthenticatorProvider
         InitializeComponent();
     }
 
-    public string UserName => LoginPageViewModel.Username;
+    public string UserName => LoginPageViewModel.StaticUsername;
 
-    public string SessionToken => LoginPageViewModel.Sessiontoken;
+    public string SessionToken => LoginPageViewModel.StaticSessionToken;
 
     public void ForceLogout()
     {

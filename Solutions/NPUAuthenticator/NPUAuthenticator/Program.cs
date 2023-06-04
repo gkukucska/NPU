@@ -14,6 +14,7 @@ var builder = WebApplication.CreateBuilder();
 
 // Add services to the container.
 builder.Services.AddGrpc();
+builder.Services.AddLogging();
 builder.Services.AddSingleton<ICredentialManager, CredentialManager>();
 builder.Services.AddSingleton<ISessionTokenManager, SessionTokenManager>();
 

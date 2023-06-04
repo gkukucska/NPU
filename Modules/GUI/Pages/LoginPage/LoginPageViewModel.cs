@@ -23,12 +23,12 @@ namespace NPU.GUI.LoginPage
 
         [ObservableProperty]
         private static string _userName;
-        private static string _username;
-        public static string Username => _username;
+        private static string _staticusername;
+        public static string StaticUsername => _staticusername;
 
         [ObservableProperty]
         private static string _sessionToken;
-        public static string Sessiontoken => _sessionToken;
+        public static string StaticSessionToken => _sessionToken;
 
         [ObservableProperty]
         private string _password;
@@ -47,7 +47,7 @@ namespace NPU.GUI.LoginPage
                 if (!string.IsNullOrEmpty(token))
                 {
                     _sessionToken = token;
-                    _username = UserName;
+                    _staticusername = UserName;
                     await Shell.Current.GoToAsync(GUIConstants.HOMEPAGEROUTE);
                     return;
                 }
@@ -66,7 +66,7 @@ namespace NPU.GUI.LoginPage
             try
             {
                 var data = (List<string>)parameters;
-                if (await _registrationClient.RegisterAsync(Username,Password))
+                if (await _registrationClient.RegisterAsync(UserName,Password))
                 {
                     Status = "Registration succesfull";
                     return;
@@ -86,7 +86,7 @@ namespace NPU.GUI.LoginPage
             try
             {
                 var data = (List<string>)parameters;
-                if (await _registrationClient.ValidateRegistrationDataAsync(Username,Password))
+                if (await _registrationClient.ValidateRegistrationDataAsync(UserName,Password))
                 {
                     CanRegister = true;
                     return;
