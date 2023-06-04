@@ -1,17 +1,21 @@
-﻿namespace NPU.Utils.FileIOHelpers
-{
-    public static class SessionTokenManager
-    {
-        private static List<KeyValuePair<string, SessionToken>> _sessionTokenList;
-        private static readonly TimeSpan _validitySpan = TimeSpan.FromMinutes(5);
-        private static object _lock = new object();
+﻿using NPU.Interfaces;
 
-        static SessionTokenManager()
+namespace NPU.Utils.SessionTokenManager
+{
+    public class SessionTokenManager : ISessionTokenManager
+    {
+        private ICredentialManager _credentialManager;
+        private List<KeyValuePair<string, SessionToken>> _sessionTokenList;
+        private static readonly TimeSpan _validitySpan = TimeSpan.FromMinutes(5);
+        private object _lock = new object();
+
+        public SessionTokenManager(ICredentialManager credentialManager)
         {
+            _credentialManager = credentialManager;
             _sessionTokenList = new List<KeyValuePair<string, SessionToken>>();
         }
 
-        public static void CloseSession(string username, string token)
+        public void CloseSession(string username, string token)
         {
             lock (_lock)
             {
@@ -26,11 +30,11 @@
             }
         }
 
-        public static string GetSessionToken(string username, string password)
+        public string GetSessionToken(string username, string password)
         {
             lock (_lock)
             {
-                if (!CredentialManager.IsCredentialValid(username, password))
+                if (!_credentialManager.IsCredentialValid(username, password))
                 {
                     throw new Exception("Invalid credentials");
                 }
@@ -47,7 +51,7 @@
             }
         }
 
-        public static bool ValidateSession(string username, string token)
+        public bool ValidateSession(string username, string token)
         {
             lock (_lock)
             {
@@ -61,7 +65,7 @@
             }
         }
 
-        private static void InvalidateToken(SessionToken token)
+        private void InvalidateToken(SessionToken token)
         {
             _sessionTokenList.RemoveAll(x => x.Value == token);
         }
@@ -73,13 +77,11 @@
                 Token = token;
                 _invalidationAction = invalidationAction;
                 _cts = new CancellationTokenSource();
-                _invalidationTask = Task.Delay(_validitySpan, _cts.Token).ContinueWith((t) =>
-                {
-                    if (!t.IsCanceled)
-                    {
-                        _invalidationAction(this);
-                    }
-                });
+                _invalidationTask = Task.Delay(_validitySpan, _cts.Token)
+                                        .ContinueWith((t) =>
+                                        {
+                                            _invalidationAction(this);
+                                        }, continuationOptions: TaskContinuationOptions.NotOnCanceled);
             }
 
             private CancellationTokenSource _cts;
@@ -92,13 +94,11 @@
                 _cts.Cancel();
                 _cts.Dispose();
                 _cts = new CancellationTokenSource();
-                _invalidationTask = Task.Delay(_validitySpan, _cts.Token).ContinueWith((t) =>
-                {
-                    if (!t.IsCanceled)
-                    {
-                        _invalidationAction(this);
-                    }
-                });
+                _invalidationTask = Task.Delay(_validitySpan, _cts.Token)
+                                        .ContinueWith((t) =>
+                                        {
+                                            _invalidationAction(this);
+                                        }, continuationOptions: TaskContinuationOptions.NotOnCanceled);
             }
         }
     }

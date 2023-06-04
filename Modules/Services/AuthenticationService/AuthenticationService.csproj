@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Interfaces\ManagerInterfaces\ManagerInterfaces.csproj" />
     <ProjectReference Include="..\..\Utils\FileIOHelpers\FileIOHelpers.csproj" />
   </ItemGroup>
   <ItemGroup>

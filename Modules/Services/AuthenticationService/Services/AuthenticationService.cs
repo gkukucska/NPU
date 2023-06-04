@@ -4,18 +4,25 @@ using Grpc.Core;
 using Google.Protobuf.WellKnownTypes;
 using static NPU.Protocols.AuthenticationService;
 using NPU.Utils.FileIOHelpers;
+using NPU.Interfaces;
 
 namespace NPU.Services.AuthenticationService
 {
     public class AuthenticationService : AuthenticationServiceBase
     {
+        private ISessionTokenManager _sessionTokenManager;
+
+        public AuthenticationService(ISessionTokenManager sessionTokenManager)
+        {
+            _sessionTokenManager=sessionTokenManager;
+        }
         public override Task<SessionData> OpenSession(LoginCredentialData request, ServerCallContext context)
         {
             return Task.Run(() =>
             {
                 try
                 {
-                    return new SessionData() { UserName = request.UserName, SessionToken = SessionTokenManager.GetSessionToken(request.UserName, request.Password) };
+                    return new SessionData() { UserName = request.UserName, SessionToken = _sessionTokenManager.GetSessionToken(request.UserName, request.Password) };
                 }
                 catch (Exception e)
                 {
@@ -28,7 +35,7 @@ namespace NPU.Services.AuthenticationService
         {
             return Task.Run(() =>
             {
-                if (SessionTokenManager.ValidateSession(request.UserName, request.SessionToken))
+                if (_sessionTokenManager.ValidateSession(request.UserName, request.SessionToken))
                 {
                     return new SessionValidationData() { IsValid = true };
                 }
@@ -40,7 +47,7 @@ namespace NPU.Services.AuthenticationService
         {
             return Task.Run(() =>
             {
-                SessionTokenManager.CloseSession(request.UserName, request.SessionToken);
+                _sessionTokenManager.CloseSession(request.UserName, request.SessionToken);
                 return new Empty();
             });
         }

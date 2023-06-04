@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using NPU.Interfaces;
 using NPU.Services;
 using NPU.Services.AuthenticationService;
 using NPU.Services.RegistrationService;
+using NPU.Utils.CredentialManager;
+using NPU.Utils.SessionTokenManager;
 
 var builder = WebApplication.CreateBuilder();
 
@@ -11,6 +14,8 @@ var builder = WebApplication.CreateBuilder();
 
 // Add services to the container.
 builder.Services.AddGrpc();
+builder.Services.AddSingleton<ICredentialManager, CredentialManager>();
+builder.Services.AddSingleton<ISessionTokenManager, SessionTokenManager>();
 
 var app = builder.Build();
 

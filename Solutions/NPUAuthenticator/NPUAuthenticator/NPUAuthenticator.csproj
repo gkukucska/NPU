@@ -26,8 +26,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Modules\Interfaces\ManagerInterfaces\ManagerInterfaces.csproj" />
     <ProjectReference Include="..\..\..\Modules\Services\AuthenticationService\AuthenticationService.csproj" />
     <ProjectReference Include="..\..\..\Modules\Services\RegistrationService\RegistrationService.csproj" />
+    <ProjectReference Include="..\..\..\Modules\Utils\CredentialManager\CredentialManager.csproj" />
+    <ProjectReference Include="..\..\..\Modules\Utils\SessionTokenManager\SessionTokenManager.csproj" />
   </ItemGroup>
 
 </Project>
